@@ -65,7 +65,7 @@ namespace IntelligentKiosk
             Application.Current.Resuming += Application_Resuming;
         }
 
-
+        
         // start preview async  @jack
         private async Task StartPreviewAsync()
         {

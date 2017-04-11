@@ -7,7 +7,56 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <!-- Overall Grid  @Jack -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <!-- Page row Grid  @Jack -->
+        <Grid x:Name="RootGrid" Margin="12,20,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.06*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.34*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Top row  @Jack -->
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Intelligent Kiost" Style="{StaticResource TitleTextBlockStyle}"/>
+            </StackPanel>
+
+            <!-- Second Top row (media service area)  @Jack -->
+            <MediaPlayerElement x:Name="_mediaPlayerElement" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
+             
+
+            <!-- Bottom row, Column Grid  @Jack -->
+            <Grid x:Name="bottomGrid" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Bottom row, left column, Row Grid  @Jack -->
+                <Grid x:Name="bottomGridLeft" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.7*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Bottom row, left colume, top row, Column Grid  @Jack -->
+                    <Grid x:Name="bottomLeftGridTop" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"/>
+                            <ColumnDefinition Width="0.4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Name="cameraGrid" Grid.Column="0">
+                            <CaptureElement Name="PreviewControl" Stretch="Uniform"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
 
     </Grid>
 </Page>

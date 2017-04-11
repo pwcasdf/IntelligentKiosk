@@ -57,7 +57,7 @@ namespace IntelligentKiosk
             Application.Current.Suspending += Application_Suspending;
             Application.Current.Resuming += Application_Resuming;
         }
-
+        
 
         // start camera view  @jack
         private async Task StartPreviewAsync()

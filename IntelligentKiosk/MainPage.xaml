@@ -25,7 +25,7 @@
 
             <!-- Second Top row (media service area)  @Jack -->
             <MediaPlayerElement x:Name="_mediaPlayerElement" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
-             
+
 
             <!-- Bottom row, Column Grid  @Jack -->
             <Grid x:Name="bottomGrid" Grid.Row="2">
@@ -47,10 +47,8 @@
                             <ColumnDefinition Width="0.6*"/>
                             <ColumnDefinition Width="0.4*"/>
                         </Grid.ColumnDefinitions>
-
-                        <Grid Name="cameraGrid" Grid.Column="0">
-                            <CaptureElement Name="PreviewControl" Stretch="Uniform"/>
-                        </Grid>
+                        
+                        <CaptureElement Name="PreviewControl" Grid.Column="0" Stretch="Uniform"/>
                     </Grid>
                 </Grid>
             </Grid>

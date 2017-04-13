@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IntelligentKiosk"
+    xmlns:ctl="using:IntelligentKiosk.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <!-- Overall Grid  @Jack -->
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="Black">
         
         <!-- Page row Grid  @Jack -->
         <Grid x:Name="RootGrid" Margin="12,20,12,12">
@@ -20,7 +21,7 @@
 
             <!-- Top row  @Jack -->
             <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Intelligent Kiost" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="Intelligent Kiost" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
             </StackPanel>
 
             <!-- Second Top row (media service area)  @Jack -->
@@ -51,12 +52,43 @@
                             <ColumnDefinition Width="0.4*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
+                        <Grid x:Name="cameraHostGrid" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ctl:CameraControl x:Name="cameraControl"/>
+                            <ctl:ImageWithFaceBorderUserControl BalloonBackground="#ECCF11" BalloonForeground="#D86C2A" FlowDirection="RightToLeft" x:Name="imageFromCameraWithFaces" DetectFacesOnLoad="True" DetectFaceAttributes="True" ShowMultipleFaces="True" PerformRecognition="True" ShowRecognitionResults="True" ShowDialogOnApiErrors="True" />
+                        </Grid>
+
+                        <Grid Grid.Column="0" x:Name="cameraGuideHost">
+                            <Grid Name="cameraGuideBallon" VerticalAlignment="Top" HorizontalAlignment="Right" Opacity="0.8" Margin="0,0,10,0" Width="200">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
                                Points="0,0,0,10,12,10" Fill="#ECCF11" />
 
-                        <!--<CaptureElement Name="PreviewControl" Grid.Column="0" Stretch="Uniform"/>-->
+                                <Border Grid.Row="1" Background="#ECCF11" Padding="10,5,10,5">
+                                    <TextBlock x:Name="cameraGuideText" Foreground="#D86C2A" Text="Step in front of the camera to start!"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic" />
+                                </Border>
+                            </Grid>
+                            <Grid Name="cameraGuideCountdownHost">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.05*"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.2*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox Grid.Row="1">
+                                    <TextBlock Name="countDownTextBlock" Foreground="#ECCF11" FontWeight="Bold" Opacity="0.9"  />
+                                </Viewbox>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

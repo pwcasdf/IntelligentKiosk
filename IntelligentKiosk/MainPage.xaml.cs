@@ -30,6 +30,10 @@ using Windows.UI.ViewManagement;
 using Windows.Media;
 using Windows.UI.Core;
 
+using ServiceHelpers;
+using IntelligentKiosk.Controls;
+using Windows.UI.Popups;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace IntelligentKiosk
@@ -58,172 +62,135 @@ namespace IntelligentKiosk
             _mediaPlayerElement.Source = MediaSource.CreateFromUri(manifestUri);
             _mediaPlayerElement.MediaPlayer.Play();
 
-            
+            Window.Current.Activated += CurrentWindowActivationStateChanged;
+            this.cameraControl.EnableAutoCaptureMode = true;
+            this.cameraControl.FilterOutSmallFaces = true;
+            this.cameraControl.AutoCaptureStateChanged += CameraControl_AutoCaptureStateChanged;
+            this.cameraControl.CameraAspectRatioChanged += CameraControl_CameraAspectRatioChanged;
         }
 
-        
-        // start preview async  @jack
-        private async Task StartPreviewAsync()
+        private void CameraControl_CameraAspectRatioChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("StartPreviewAsync");
-
-            // prevent sleep mode  @jack
-            _displayRequest.RequestActive();
-
-            _systemMediaControls.PropertyChanged += SystemMediaControls_PropertyChanged;
-
-            PreviewControl.Source = _mediaCapture;
-            PreviewControl.FlowDirection = _mirroringPreview ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-
-            // start the preview  @jack
-            await _mediaCapture.StartPreviewAsync();
-            _isPreviewing = true;
+            this.UpdateCameraHostSize();
         }
 
-        // stop preview async  @jack
-        private async Task StopPreviewAsync()
+        private async void CurrentWindowActivationStateChanged(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
         {
-            _isPreviewing = false;
-            await _mediaCapture.StopPreviewAsync();
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            if ((e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.CodeActivated ||
+                e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.PointerActivated) &&
+                this.cameraControl.CameraStreamState == Windows.Media.Devices.CameraStreamState.Shutdown)
             {
-                PreviewControl.Source = null;
+                // When our Window loses focus due to user interaction Windows shuts it down, so we 
+                // detect here when the window regains focus and trigger a restart of the camera.
+                await this.cameraControl.StartStreamAsync();
+            }
+        }
 
-                _displayRequest.RequestRelease();
-            });
+        private async void CameraControl_AutoCaptureStateChanged(object sender, AutoCaptureState e)
+        {
+            switch (e)
+            {
+                case AutoCaptureState.WaitingForFaces:
+                    this.cameraGuideBallon.Opacity = 1;
+                    this.cameraGuideText.Text = "Step in front of the camera to start!";
+                    this.cameraGuideHost.Opacity = 1;
+                    break;
+                case AutoCaptureState.WaitingForStillFaces:
+                    this.cameraGuideText.Text = "Hold still...";
+                    break;
+                case AutoCaptureState.ShowingCountdownForCapture:
+                    this.cameraGuideText.Text = "";
+                    this.cameraGuideBallon.Opacity = 0;
+
+                    this.cameraGuideCountdownHost.Opacity = 1;
+                    
+                    this.countDownTextBlock.Text = "5";
+                    await Task.Delay(750);
+                    this.countDownTextBlock.Text = "4";
+                    await Task.Delay(750);
+                    this.countDownTextBlock.Text = "3";
+                    await Task.Delay(750);
+                    this.countDownTextBlock.Text = "2";
+                    await Task.Delay(750);
+                    this.countDownTextBlock.Text = "1";
+                    await Task.Delay(750);
+                    this.cameraGuideCountdownHost.Opacity = 0;
+
+                    this.ProcessCameraCapture(await this.cameraControl.TakeAutoCapturePhoto());
+                    break;
+                case AutoCaptureState.ShowingCapturedPhoto:
+                    this.cameraGuideHost.Opacity = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ProcessCameraCapture(ImageAnalyzer e)
+        {
+            if (e == null)
+            {
+                this.cameraControl.RestartAutoCaptureCycle();
+                return;
+            }
+
+            this.imageFromCameraWithFaces.DataContext = e;
+
+            e.FaceRecognitionCompleted += async (s, args) =>
+            {
+                //this.photoCaptureBalloonHost.Opacity = 1;
+
+                int photoDisplayDuration = 10;
+                double decrementPerSecond = 100.0 / photoDisplayDuration;
+                for (double i = 100; i >= 0; i -= decrementPerSecond)
+                {
+                    //this.resultDisplayTimerUI.Value = i;
+                    await Task.Delay(1000);
+                }
+
+                //this.photoCaptureBalloonHost.Opacity = 0;
+                this.imageFromCameraWithFaces.DataContext = null;
+
+                this.cameraControl.RestartAutoCaptureCycle();
+            };
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await InitializeCameraAsync();
+            EnterKioskMode();
+            
+            await this.cameraControl.StartStreamAsync();
+
+            base.OnNavigatedTo(e);
         }
 
-        private async Task InitializeCameraAsync()
+        private void EnterKioskMode()
         {
-            Debug.WriteLine("InitializeCameraAync");
-
-            if (_mediaCapture == null)
+            ApplicationView view = ApplicationView.GetForCurrentView();
+            if (!view.IsFullScreenMode)
             {
-                // attempt to get the back camera if one is availale, but use any camera device if not  @jack
-                var cameraDevice = await FindCameraDeviceByPanelAync(Windows.Devices.Enumeration.Panel.Back);
-
-                if (cameraDevice == null)
-                {
-                    Debug.WriteLine("No camera device found!");
-                    return;
-                }
-
-                _mediaCapture = new MediaCapture();
-
-                // notification when something goes wrong  @jack
-                _mediaCapture.Failed += MediaCapture_Failed;
-
-                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id };
-
-                // initialize mediacapture  @jack
-                try
-                {
-                    await _mediaCapture.InitializeAsync(settings);
-                    _isInitialized = true;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    Debug.WriteLine("The app was denied access to the camera");
-                }
-
-                // if initialization succeeded  @jack
-                if (_isInitialized)
-                {
-                    if (cameraDevice.EnclosureLocation == null || cameraDevice.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Unknown)
-                    {
-                        _externalCamera = true;
-                    }
-                    else
-                    {
-                        _externalCamera = false;
-
-                        _mirroringPreview = (cameraDevice.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Front);
-                    }
-
-                    await StartPreviewAsync();
-                }
+                view.TryEnterFullScreenMode();
             }
         }
 
-        // free the camera resource  @jack
-        private async Task CleanupCameraAsync()
+        protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (_isInitialized)
-            {
-                if (_isPreviewing)
-                {
-                    await StopPreviewAsync();
-                }
+            Window.Current.Activated -= CurrentWindowActivationStateChanged;
+            this.cameraControl.AutoCaptureStateChanged -= CameraControl_AutoCaptureStateChanged;
+            this.cameraControl.CameraAspectRatioChanged -= CameraControl_CameraAspectRatioChanged;
 
-                _isInitialized = false;
-            }
-
-            if (_mediaCapture != null)
-            {
-                _mediaCapture.Failed -= MediaCapture_Failed;
-                _mediaCapture.Dispose();
-                _mediaCapture = null;
-            }
+            await this.cameraControl.StopStreamAsync();
+            base.OnNavigatingFrom(e);
         }
 
-        private async void Application_Resuming(object sender, object o)
+        private void OnPageSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (Frame.CurrentSourcePageType == typeof(MainPage))
-            {
-                await InitializeCameraAsync();
-            }
+            this.UpdateCameraHostSize();
         }
 
-        private async void Application_Suspending(object sender, SuspendingEventArgs e)
+        private void UpdateCameraHostSize()
         {
-            if (Frame.CurrentSourcePageType == typeof(MainPage))
-            {
-                var deferral = e.SuspendingOperation.GetDeferral();
-                await CleanupCameraAsync();
-                deferral.Complete();
-            }
-        }
-
-        private static async Task<DeviceInformation> FindCameraDeviceByPanelAync(Windows.Devices.Enumeration.Panel desiredPanel)
-        {
-            var allVideoDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-
-            DeviceInformation desiredDevice = allVideoDevices.FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == desiredPanel);
-            return desiredDevice ?? allVideoDevices.FirstOrDefault();
-        }
-
-        private async void MediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
-        {
-            Debug.WriteLine("MediaCapture_Failed: (0x{0:X}) {1}", errorEventArgs.Code, errorEventArgs.Message);
-
-            await CleanupCameraAsync();
-        }  
-
-        private async void SystemMediaControls_PropertyChanged(SystemMediaTransportControls sender, SystemMediaTransportControlsPropertyChangedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                // Only handle this event if this page is currently being displayed
-                if (args.Property == SystemMediaTransportControlsProperty.SoundLevel && Frame.CurrentSourcePageType == typeof(MainPage))
-                {
-                    // Check to see if the app is being muted. If so, it is being minimized.
-                    // Otherwise if it is not initialized, it is being brought into focus.
-                    if (sender.SoundLevel == SoundLevel.Muted)
-                    {
-                        await CleanupCameraAsync();
-                    }
-                    else if (!_isInitialized)
-                    {
-                        await InitializeCameraAsync();
-                    }
-                }
-            });
+            this.cameraHostGrid.Width = this.cameraHostGrid.ActualHeight * (this.cameraControl.CameraAspectRatio != 0 ? this.cameraControl.CameraAspectRatio : 1.777777777777);
         }
     }
 }

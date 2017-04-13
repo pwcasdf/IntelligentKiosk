@@ -56,7 +56,7 @@
                                HorizontalAlignment="Center"
                                Points="0,0,0,10,12,10" Fill="#ECCF11" />
 
-                        <CaptureElement Name="PreviewControl" Grid.Column="0" Stretch="Uniform"/>
+                        <!--<CaptureElement Name="PreviewControl" Grid.Column="0" Stretch="Uniform"/>-->
                     </Grid>
                 </Grid>
             </Grid>

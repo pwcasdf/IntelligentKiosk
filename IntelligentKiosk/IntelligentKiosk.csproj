@@ -152,7 +152,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\Github\Cognitive-Samples-IntelligentKiosk\Kiosk\ServiceHelpers\ServiceHelpers.csproj">
+    <ProjectReference Include="..\ServiceHelpers\ServiceHelpers.csproj">
       <Project>{5d9320af-a9e4-48e3-89bc-9f7f0954b298}</Project>
       <Name>ServiceHelpers</Name>
     </ProjectReference>

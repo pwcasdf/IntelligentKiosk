@@ -24,7 +24,10 @@
             </StackPanel>
 
             <!-- Second Top row (media service area)  @Jack -->
-            <MediaPlayerElement x:Name="_mediaPlayerElement" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
+            <Grid Grid.Row="1">
+                <MediaPlayerElement x:Name="_mediaPlayerElement" HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
+            </Grid>
 
 
             <!-- Bottom row, Column Grid  @Jack -->
@@ -47,7 +50,12 @@
                             <ColumnDefinition Width="0.6*"/>
                             <ColumnDefinition Width="0.4*"/>
                         </Grid.ColumnDefinitions>
-                        
+
+                        <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Points="0,0,0,10,12,10" Fill="#ECCF11" />
+
                         <CaptureElement Name="PreviewControl" Grid.Column="0" Stretch="Uniform"/>
                     </Grid>
                 </Grid>

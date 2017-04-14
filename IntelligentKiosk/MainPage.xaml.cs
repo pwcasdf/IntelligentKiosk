@@ -58,7 +58,7 @@ namespace IntelligentKiosk
         {
             this.InitializeComponent();
 
-            Uri manifestUri = new Uri("http://jack.streaming.mediaservices.windows.net/0eb051cf-17cf-46fd-a616-bbcbb06077c5/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)");
+            Uri manifestUri = new Uri("MANIFEST ADDRESS HERE");
             _mediaPlayerElement.Source = MediaSource.CreateFromUri(manifestUri);
             _mediaPlayerElement.MediaPlayer.Play();
 

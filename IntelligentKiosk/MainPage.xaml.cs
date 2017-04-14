@@ -58,7 +58,7 @@ namespace IntelligentKiosk
         {
             this.InitializeComponent();
 
-            Uri manifestUri = new Uri("http://jack.streaming.mediaservices.windows.net/0eb051cf-17cf-46fd-a616-bbcbb06077c5/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)");
+            Uri manifestUri = new Uri("MANIFEST ADDRESS HERE");
             _mediaPlayerElement.Source = MediaSource.CreateFromUri(manifestUri);
             _mediaPlayerElement.MediaPlayer.Play();
 
@@ -105,15 +105,15 @@ namespace IntelligentKiosk
                     this.cameraGuideCountdownHost.Opacity = 1;
                     
                     this.countDownTextBlock.Text = "5";
-                    await Task.Delay(750);
+                    await Task.Delay(1000);
                     this.countDownTextBlock.Text = "4";
-                    await Task.Delay(750);
+                    await Task.Delay(1000);
                     this.countDownTextBlock.Text = "3";
-                    await Task.Delay(750);
+                    await Task.Delay(1000);
                     this.countDownTextBlock.Text = "2";
-                    await Task.Delay(750);
+                    await Task.Delay(1000);
                     this.countDownTextBlock.Text = "1";
-                    await Task.Delay(750);
+                    await Task.Delay(1000);
                     this.cameraGuideCountdownHost.Opacity = 0;
 
                     this.ProcessCameraCapture(await this.cameraControl.TakeAutoCapturePhoto());
@@ -138,17 +138,17 @@ namespace IntelligentKiosk
 
             e.FaceRecognitionCompleted += async (s, args) =>
             {
-                //this.photoCaptureBalloonHost.Opacity = 1;
+                this.photoCaptureBalloonHost.Opacity = 0.6;
 
                 int photoDisplayDuration = 10;
                 double decrementPerSecond = 100.0 / photoDisplayDuration;
                 for (double i = 100; i >= 0; i -= decrementPerSecond)
                 {
-                    //this.resultDisplayTimerUI.Value = i;
+                    this.resultDisplayTimerUI.Value = i;
                     await Task.Delay(1000);
                 }
 
-                //this.photoCaptureBalloonHost.Opacity = 0;
+                this.photoCaptureBalloonHost.Opacity = 0;
                 this.imageFromCameraWithFaces.DataContext = null;
 
                 this.cameraControl.RestartAutoCaptureCycle();

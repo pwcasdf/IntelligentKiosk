@@ -45,51 +45,86 @@
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Bottom row, left colume, top row, Column Grid  @Jack -->
-                    <Grid x:Name="bottomLeftGridTop" Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.6*"/>
-                            <ColumnDefinition Width="0.4*"/>
-                        </Grid.ColumnDefinitions>
+                    <!-- Assigning Entire left and right grid for camera and description section  @jack -->
+                    <Grid Grid.Row="0">
+                        <!-- Bottom row, left colume, top row, Column Grid  @Jack -->
+                        <Grid x:Name="bottomLeftGridTop" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"/>
+                                <ColumnDefinition Width="0.4*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Grid x:Name="cameraHostGrid" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <ctl:CameraControl x:Name="cameraControl"/>
-                            <ctl:ImageWithFaceBorderUserControl BalloonBackground="#ECCF11" BalloonForeground="#D86C2A" FlowDirection="RightToLeft" x:Name="imageFromCameraWithFaces" DetectFacesOnLoad="True" DetectFaceAttributes="True" ShowMultipleFaces="True" PerformRecognition="True" ShowRecognitionResults="True" ShowDialogOnApiErrors="True" />
+                            <!-- preview Frame & photo Frame  @jack -->
+                            <Grid x:Name="cameraHostGrid" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ctl:CameraControl x:Name="cameraControl"/>
+                                <ctl:ImageWithFaceBorderUserControl BalloonBackground="White" BalloonForeground="Black"  
+                                                                    FlowDirection="RightToLeft" x:Name="imageFromCameraWithFaces" 
+                                                                    DetectFacesOnLoad="True" DetectFaceAttributes="True" 
+                                                                    ShowMultipleFaces="True" PerformRecognition="True" 
+                                                                    ShowRecognitionResults="True" ShowDialogOnApiErrors="True" />
+                            </Grid>
+
+                            <!-- upper right ballon  @jack -->
+                            <Grid Grid.Column="0" x:Name="cameraGuideHost">
+                                <Grid Name="cameraGuideBallon" Grid.Row="0"  VerticalAlignment="Top" 
+                                      HorizontalAlignment="Right" Opacity="0.6" Margin="0,0,10,0" Width="200">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0" 
+                                          VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                          Points="0,0,0,10,12,10" Fill="White" />
+
+                                    <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
+                                        <TextBlock x:Name="cameraGuideText" Foreground="Black" Text="Come closer to take a photo!!" 
+                                               Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="ExtraBold"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- counting down for a photo  @jack -->
+                                <Grid Name="cameraGuideCountdownHost">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.05*"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="0.2*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox Grid.Row="1">
+                                        <TextBlock Name="countDownTextBlock" Foreground="White" FontWeight="Bold" Opacity="0.4"  />
+                                    </Viewbox>
+                                </Grid>
+
+
+                            </Grid>
                         </Grid>
 
-                        <Grid Grid.Column="0" x:Name="cameraGuideHost">
-                            <Grid Name="cameraGuideBallon" VerticalAlignment="Top" HorizontalAlignment="Right" Opacity="0.8" Margin="0,0,10,0" Width="200">
+                        <!-- bottom left ballon  @jack -->
+                        <Grid Name="photoCaptureBalloonHost" Grid.Row="0" Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,50,0,0">
+                            <Grid Margin="10,0,0,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
 
-                                <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Left"
-                               Points="0,0,0,10,12,10" Fill="#ECCF11" />
+                                <Polyline StrokeThickness="0" Grid.Row="0" Margin="0,0,10,0" 
+                                              VerticalAlignment="Top" 
+                                              HorizontalAlignment="Right" 
+                                              Points="10,0,10,10,-5,10" Fill="White" />
 
-                                <Border Grid.Row="1" Background="#ECCF11" Padding="10,5,10,5">
-                                    <TextBlock x:Name="cameraGuideText" Foreground="#D86C2A" Text="Step in front of the camera to start!"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic" />
+                                <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
+                                    <StackPanel>
+                                        <TextBlock Foreground="Black" Text="Hello there!&#10;Next shot will begin shortly" 
+                                               Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="ExtraBold" />
+                                        <ProgressBar x:Name="resultDisplayTimerUI" Height="6" Opacity="0.8" Margin="0,6,0,0" Foreground="#f8f7bb" VerticalAlignment="Bottom" />
+                                    </StackPanel>
                                 </Border>
                             </Grid>
-                            <Grid Name="cameraGuideCountdownHost">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.05*"/>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="0.2*"/>
-                                </Grid.RowDefinitions>
-
-                                <Viewbox Grid.Row="1">
-                                    <TextBlock Name="countDownTextBlock" Foreground="#ECCF11" FontWeight="Bold" Opacity="0.9"  />
-                                </Viewbox>
-                            </Grid>
-                        </Grid>
-
-                        <Grid Grid.Column="1">
-                            
                         </Grid>
                     </Grid>
+
+                    
                 </Grid>
             </Grid>
 

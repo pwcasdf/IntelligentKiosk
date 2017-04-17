@@ -34,6 +34,8 @@ using ServiceHelpers;
 using IntelligentKiosk.Controls;
 using Windows.UI.Popups;
 
+using Windows.UI.Xaml.Media.Imaging;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace IntelligentKiosk
@@ -43,30 +45,42 @@ namespace IntelligentKiosk
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MediaCapture _mediaCapture;
         private DisplayRequest _displayRequest=new DisplayRequest();
         private readonly DisplayInformation _displayInformation = DisplayInformation.GetForCurrentView();
         private readonly SystemMediaTransportControls _systemMediaControls = SystemMediaTransportControls.GetForCurrentView();
 
-        private bool _isPreviewing=false;
-        private bool _isInitialized=false;
-        private bool _mirroringPreview=false;
-        private bool _externalCamera=false;
-
+        private string mediaURI;
+        private MediaPlaybackList playbackList = new MediaPlaybackList();
+        private Dictionary<string, BitmapImage> artCache = new Dictionary<string, BitmapImage>();
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            Uri manifestUri = new Uri("MANIFEST ADDRESS HERE");
-            _mediaPlayerElement.Source = MediaSource.CreateFromUri(manifestUri);
-            _mediaPlayerElement.MediaPlayer.Play();
+            mediaURI = "http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)";
+            mediaPlay(mediaURI);
+
+            InitializePlaybackList();
+            playlistView.ItemClick += PlaylistView_ItemClick;
 
             Window.Current.Activated += CurrentWindowActivationStateChanged;
             this.cameraControl.EnableAutoCaptureMode = true;
             this.cameraControl.FilterOutSmallFaces = true;
             this.cameraControl.AutoCaptureStateChanged += CameraControl_AutoCaptureStateChanged;
             this.cameraControl.CameraAspectRatioChanged += CameraControl_CameraAspectRatioChanged;
+        }
+
+        /*
+         * 
+         * media play  @jack
+         * 
+         */
+
+        private void mediaPlay(string uri)
+        {
+            Uri manifestUri = new Uri(uri);
+            _mediaPlayerElement.Source = MediaSource.CreateFromUri(manifestUri);
+            _mediaPlayerElement.MediaPlayer.Play();
         }
 
         private void CameraControl_CameraAspectRatioChanged(object sender, EventArgs e)
@@ -104,10 +118,6 @@ namespace IntelligentKiosk
 
                     this.cameraGuideCountdownHost.Opacity = 1;
                     
-                    this.countDownTextBlock.Text = "5";
-                    await Task.Delay(1000);
-                    this.countDownTextBlock.Text = "4";
-                    await Task.Delay(1000);
                     this.countDownTextBlock.Text = "3";
                     await Task.Delay(1000);
                     this.countDownTextBlock.Text = "2";
@@ -191,6 +201,80 @@ namespace IntelligentKiosk
         private void UpdateCameraHostSize()
         {
             this.cameraHostGrid.Width = this.cameraHostGrid.ActualHeight * (this.cameraControl.CameraAspectRatio != 0 ? this.cameraControl.CameraAspectRatio : 1.777777777777);
+        }
+
+        /*
+         * 
+         * play list part begin  @jack
+         * 
+         */
+
+        private void PlaylistView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as Models.MediaModel;
+            Debug.WriteLine("Clicked item: " + item.MediaUri.ToString());
+
+            mediaPlay(item.MediaUri.ToString());
+        }
+
+        void InitializePlaybackList()
+        {
+            // Initialize the playlist data/view model.
+            // In a production app your data would be sourced from a data store or service.
+
+            // Add content
+            var media1 = new Models.MediaModel();
+            media1.Title = "A Sky Full of Stars - Coldplay";
+            media1.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)");
+            media1.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+            playlistView.Media.Add(media1);
+
+            var media2 = new Models.MediaModel();
+            media2.Title = "Hymm for the Weekend - Coldplay";
+            media2.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/c3373fd7-4e2a-498d-a96f-2298303ef0ed/Hymm_for_the_weekend.ism/manifest(format=m3u8-aapl)");
+            media2.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/c3373fd7-4e2a-498d-a96f-2298303ef0ed/Hymm_for_the_weekend_000001.png");
+            playlistView.Media.Add(media2);
+
+            var media3 = new Models.MediaModel();
+            media3.Title = "Something just like this - Coldplay";
+            media3.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)");
+            media3.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
+            playlistView.Media.Add(media3);
+
+            // Pre-cache all album art to facilitate smooth gapless transitions.
+            // A production app would have a more sophisticated object cache.
+            foreach (var media in playlistView.Media)
+            {
+                var bitmap = new BitmapImage();
+                bitmap.UriSource = media.ArtUri;
+                artCache[media.ArtUri.ToString()] = bitmap;
+            }
+
+            // Initialize the playback list for this content
+            foreach (var media in playlistView.Media)
+            {
+                var mediaSource = MediaSource.CreateFromUri(media.MediaUri);
+                mediaSource.CustomProperties["uri"] = media.MediaUri;
+
+                var playbackItem = new MediaPlaybackItem(mediaSource);
+
+                playbackList.Items.Add(playbackItem);
+            }
+
+            // Subscribe for changes
+            playbackList.CurrentItemChanged += PlaybackList_CurrentItemChanged;
+
+            // Loop
+            playbackList.AutoRepeatEnabled = true;
+        }
+
+        private void PlaybackList_CurrentItemChanged(MediaPlaybackList sender, CurrentMediaPlaybackItemChangedEventArgs args)
+        {
+            var ignoreAwaitWarning = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                var currentItem = sender.CurrentItem;
+                playlistView.SelectedIndex = playbackList.Items.ToList().FindIndex(i => i == currentItem);
+            });
         }
     }
 }

@@ -27,8 +27,7 @@
 
             <!-- Second Top row (media service area)  @Jack -->
             <Grid Grid.Row="1">
-                <MediaPlayerElement x:Name="_mediaPlayerElement" HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
+                <MediaElement x:Name="mediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
 
 

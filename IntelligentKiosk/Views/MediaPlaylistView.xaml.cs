@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using System.Threading.Tasks;
+
 // 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
 namespace IntelligentKiosk.Views
@@ -46,6 +48,11 @@ namespace IntelligentKiosk.Views
             {
                 listView.SelectedIndex = value;
             }
+        }
+
+        public void scrolling()
+        {
+            listView.ScrollIntoView(listView.SelectedItem);
         }
 
         /// <summary>
@@ -86,5 +93,6 @@ namespace IntelligentKiosk.Views
         {
             return media.ToList().FindIndex(s => s.MediaUri == id);
         }
+        
     }
 }

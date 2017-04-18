@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IntelligentKiosk"
+    xmlns:mediaLocal="using:IntelligentKiosk.Views"
     xmlns:ctl="using:IntelligentKiosk.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,13 +27,12 @@
 
             <!-- Second Top row (media service area)  @Jack -->
             <Grid Grid.Row="1">
-                <MediaPlayerElement x:Name="_mediaPlayerElement" HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Stretch" AreTransportControlsEnabled="False"/>
+                <MediaElement x:Name="mediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
 
 
             <!-- Bottom row, Column Grid  @Jack -->
-            <Grid x:Name="bottomGrid" Grid.Row="2">
+            <Grid x:Name="bottomGrid" Grid.Row="2" Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"/>
                     <ColumnDefinition Width="0.3*"/>
@@ -124,6 +124,14 @@
                         </Grid>
                     </Grid>
 
+                    
+                </Grid>
+
+                <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <mediaLocal:MediaPlaylistView x:Name="playlistView" />
+
+                    <TextBlock x:Name="txtCurrentTrack" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock x:Name="txtCurrentState" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,50,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
                     
                 </Grid>
             </Grid>

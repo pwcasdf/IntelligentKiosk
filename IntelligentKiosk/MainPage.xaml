@@ -22,7 +22,7 @@
 
             <!-- Top row  @Jack -->
             <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Intelligent Kiost" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                <TextBlock Text="Intelligent Kiosk" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
             </StackPanel>
 
             <!-- Second Top row (media service area)  @Jack -->

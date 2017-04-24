@@ -36,6 +36,9 @@ using Windows.UI.Popups;
 
 using Windows.UI.Xaml.Media.Imaging;
 
+using IntelligentKiosk.Views.TrigerInfo;
+using Microsoft.ProjectOxford.Face.Contract;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace IntelligentKiosk
@@ -52,6 +55,8 @@ namespace IntelligentKiosk
         private MediaPlaybackList playbackList = new MediaPlaybackList();
         private Dictionary<string, BitmapImage> artCache = new Dictionary<string, BitmapImage>();
         private DisplayRequest appDisplayRequest = null;
+
+        private Recommendation currentRecommendation;
 
         public MainPage()
         {
@@ -84,39 +89,33 @@ namespace IntelligentKiosk
             // Add content
             var media1 = new Models.MediaModel();
             media1.Title = "A Sky Full of Stars - Coldplay";
-            media1.MediaUri = new Uri("VIDEO_URI_HRER");
-            media1.ArtUri = new Uri("THUMBNAIL_URI_HRER");
+            media1.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)");
+            media1.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
             playlistView.Media.Add(media1);
 
             var media2 = new Models.MediaModel();
             media2.Title = "Hymm for the Weekend - Coldplay";
-            media2.MediaUri = new Uri("VIDEO_URI_HRER");
-            media2.ArtUri = new Uri("THUMBNAIL_URI_HRER");
+            media2.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/c3373fd7-4e2a-498d-a96f-2298303ef0ed/Hymm_for_the_weekend.ism/manifest(format=m3u8-aapl)");
+            media2.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/c3373fd7-4e2a-498d-a96f-2298303ef0ed/Hymm_for_the_weekend_000001.png");
             playlistView.Media.Add(media2);
 
             var media3 = new Models.MediaModel();
             media3.Title = "Something just like this - Coldplay";
-            media3.MediaUri = new Uri("VIDEO_URI_HRER");
-            media3.ArtUri = new Uri("THUMBNAIL_URI_HRER");
+            media3.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)");
+            media3.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
             playlistView.Media.Add(media3);
 
             var media4 = new Models.MediaModel();
             media4.Title = "Up&Up - Coldplay";
-            media4.MediaUri = new Uri("VIDEO_URI_HRER");
-            media4.ArtUri = new Uri("THUMBNAIL_URI_HRER");
+            media4.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/cd3e82a2-1f5d-4c0c-9412-23ff0a03e0cf/Up&Up.ism/manifest(format=m3u8-aapl)");
+            media4.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/cd3e82a2-1f5d-4c0c-9412-23ff0a03e0cf/Up&Up_000001.png");
             playlistView.Media.Add(media4);
 
             var media5 = new Models.MediaModel();
             media5.Title = "Shape of You";
-            media5.MediaUri = new Uri("VIDEO_URI_HRER");
-            media5.ArtUri = new Uri("THUMBNAIL_URI_HRER");
+            media5.MediaUri = new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)");
+            media5.ArtUri = new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You_000001.png");
             playlistView.Media.Add(media5);
-
-            var media6 = new Models.MediaModel();
-            media6.Title = "Up&Up - Coldplay";
-            media6.MediaUri = new Uri("VIDEO_URI_HRER");
-            media6.ArtUri = new Uri("THUMBNAIL_URI_HRER");
-            playlistView.Media.Add(media6);
 
             // Pre-cache all album art to facilitate smooth gapless transitions.
             // A production app would have a more sophisticated object cache.
@@ -179,74 +178,8 @@ namespace IntelligentKiosk
 
             // Start the background task if it wasn't running
             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == item.MediaUri));
-
-            if (MediaElementState.Paused == mediaElement.CurrentState ||
-                MediaElementState.Stopped == mediaElement.CurrentState)
-            {
-                mediaElement.Play();
-            }
         }
-
-        /// <summary>
-        /// Sends message to the background task to skip to the previous track.
-        /// </summary>
-        private void prevButton_Click(object sender, RoutedEventArgs e)
-        {
-            playbackList.MovePrevious();
-        }
-
-        /// <summary>
-        /// If the task is already running, it will just play/pause MediaPlayer Instance
-        /// Otherwise, initializes MediaPlayer Handlers and starts playback
-        /// track or to pause if we're already playing.
-        /// </summary>
-        private void playButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MediaElementState.Playing == mediaElement.CurrentState)
-            {
-                mediaElement.Pause();
-            }
-            else if (MediaElementState.Paused == mediaElement.CurrentState ||
-                MediaElementState.Stopped == mediaElement.CurrentState)
-            {
-                mediaElement.Play();
-            }
-        }
-
-        /// <summary>
-        /// Tells the background audio agent to skip to the next track.
-        /// </summary>
-        /// <param name="sender">The button</param>
-        /// <param name="e">Click event args</param>
-        private void nextButton_Click(object sender, RoutedEventArgs e)
-        {
-            playbackList.MoveNext();
-        }
-
-        private void speedButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Create menu and add commands
-            var popupMenu = new PopupMenu();
-
-            popupMenu.Commands.Add(new UICommand("4.0x", command => mediaElement.PlaybackRate = 4.0));
-            popupMenu.Commands.Add(new UICommand("2.0x", command => mediaElement.PlaybackRate = 2.0));
-            popupMenu.Commands.Add(new UICommand("1.5x", command => mediaElement.PlaybackRate = 1.5));
-            popupMenu.Commands.Add(new UICommand("1.0x", command => mediaElement.PlaybackRate = 1.0));
-            popupMenu.Commands.Add(new UICommand("0.5x", command => mediaElement.PlaybackRate = 0.5));
-
-            // Get button transform and then offset it by half the button
-            // width to center. This will show the popup just above the button.
-            var button = (Button)sender;
-            var transform = button.TransformToVisual(null);
-            var point = transform.TransformPoint(new Point(button.Width / 2, 0));
-
-            // Show popup
-            var ignoreAsyncResult = popupMenu.ShowAsync(point);
-
-        }
-
-
-
+        
         /***************************************************************************
          ***************************************************************************
          ******************************* camera work *******************************  @jack
@@ -329,11 +262,12 @@ namespace IntelligentKiosk
                     await Task.Delay(1000);
                 }
 
+
                 this.photoCaptureBalloonHost.Opacity = 0;
                 this.imageFromCameraWithFaces.DataContext = null;
-
                 this.cameraControl.RestartAutoCaptureCycle();
             };
+            CameraControl_ImageCaptured(e);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -374,6 +308,81 @@ namespace IntelligentKiosk
         private void UpdateCameraHostSize()
         {
             this.cameraHostGrid.Width = this.cameraHostGrid.ActualHeight * (this.cameraControl.CameraAspectRatio != 0 ? this.cameraControl.CameraAspectRatio : 1.777777777777);
+        }
+
+
+        /***************************************************************************
+         ***************************************************************************
+         ***************************** video trigger *******************************  @jack
+         ***************************************************************************
+         ***************************************************************************/
+
+
+        private async void CameraControl_ImageCaptured(ImageAnalyzer e)
+        {
+            // We induce a delay here to give the captured image some time to render before we hide the camera.
+            // This avoids a black flash.
+            await Task.Delay(50);
+
+            e.FaceRecognitionCompleted += (s, args) =>
+            {
+                ShowRecommendations(e);
+            };
+        }
+
+        private void ShowRecommendations(ImageAnalyzer imageWithFaces)
+        {
+            Recommendation recommendation = null;
+            this.currentRecommendation = null;
+
+            int numberOfPeople = imageWithFaces.DetectedFaces.Count();
+            if (numberOfPeople == 1)
+            {
+                // Single person
+                //playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
+
+                IdentifiedPerson identifiedPerson = imageWithFaces.IdentifiedPersons.FirstOrDefault();
+                if (identifiedPerson != null)
+                {
+                    // See if we have a personalized recommendation for this person.
+                    //recommendation = this.kioskSettings.PersonalizedRecommendations.FirstOrDefault(r => r.Id.Equals(identifiedPerson.Person.Name, StringComparison.OrdinalIgnoreCase));
+                    //playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
+                    /*if (MediaElementState.Paused == mediaElement.CurrentState ||
+                        MediaElementState.Stopped == mediaElement.CurrentState)
+                    {
+                        mediaElement.Play();
+                    }*/
+                }
+
+                if (recommendation == null)
+                {
+                    // Didn't find a personalized recommendation (or we don't have anyone recognized), so default to 
+                    // the age/gender-based generic recommendation
+                    Face face = imageWithFaces.DetectedFaces.First();
+                    if (face.FaceAttributes.Gender.Equals("Male",StringComparison.OrdinalIgnoreCase))
+                    {
+                        playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+                    }
+                    else
+                    {
+                        playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
+                    }
+
+
+                    //recommendation = this.kioskSettings.GetGenericRecommendationForPerson((int)face.FaceAttributes.Age, face.FaceAttributes.Gender);
+                }
+            }
+            else if (numberOfPeople > 1 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12) &&
+                     imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age > 12))
+            {
+                // Group with at least one child
+                //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "ChildWithOneOrMoreAdults");
+            }
+            else if (numberOfPeople > 1 && !imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
+            {
+                // Group of adults without a child
+                //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "TwoOrMoreAdults");
+            }
         }
     }
 }

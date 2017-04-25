@@ -206,6 +206,9 @@ namespace IntelligentKiosk
 
         private async void CameraControl_AutoCaptureStateChanged(object sender, AutoCaptureState e)
         {
+            // remove the image from grid(it is right next to camera grid)  @jack
+            imageInfoImage.Source = null;
+
             switch (e)
             {
                 case AutoCaptureState.WaitingForFaces:
@@ -242,6 +245,7 @@ namespace IntelligentKiosk
 
         private void ProcessCameraCapture(ImageAnalyzer e)
         {
+            // if the image is null  @jack
             if (e == null)
             {
                 this.cameraControl.RestartAutoCaptureCycle();
@@ -330,58 +334,255 @@ namespace IntelligentKiosk
             };
         }
 
-        private void ShowRecommendations(ImageAnalyzer imageWithFaces)
+        //camera trigger  @jack
+        private async void ShowRecommendations(ImageAnalyzer imageWithFaces)
         {
+            // if there is no face on the image  @jack
+            if(imageWithFaces.DetectedFaces.Count()==0)
+            {
+                this.photoCaptureBalloonHost.Opacity = 0.6;
+
+                int photoDisplayDuration = 10;
+                double decrementPerSecond = 100.0 / photoDisplayDuration;
+                for (double i = 100; i >= 0; i -= decrementPerSecond)
+                {
+                    this.resultDisplayTimerUI.Value = i;
+                    await Task.Delay(1000);
+                }
+
+
+                this.photoCaptureBalloonHost.Opacity = 0;
+                this.imageFromCameraWithFaces.DataContext = null;
+                this.cameraControl.RestartAutoCaptureCycle();
+
+                return;
+            }
+
+            // this part is for recommandation for the people who are recognized  @jack
             Recommendation recommendation = null;
             this.currentRecommendation = null;
 
+            Face face = imageWithFaces.DetectedFaces.First();
+
             int numberOfPeople = imageWithFaces.DetectedFaces.Count();
+            int analyzedAge = ((int)face.FaceAttributes.Age / 10) * 10;
+
+            var adImage = new BitmapImage();
+            string averageAge = null;
+
+
+            // for single person  @jack
             if (numberOfPeople == 1)
             {
-                // Single person
-                //playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
-
                 IdentifiedPerson identifiedPerson = imageWithFaces.IdentifiedPersons.FirstOrDefault();
+
+                // those who identified  @jack
                 if (identifiedPerson != null)
                 {
-                    // See if we have a personalized recommendation for this person.
-                    //recommendation = this.kioskSettings.PersonalizedRecommendations.FirstOrDefault(r => r.Id.Equals(identifiedPerson.Person.Name, StringComparison.OrdinalIgnoreCase));
-                    //playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
-                    /*if (MediaElementState.Paused == mediaElement.CurrentState ||
-                        MediaElementState.Stopped == mediaElement.CurrentState)
-                    {
-                        mediaElement.Play();
-                    }*/
+                    // for identified person, need to chanage the TrigerInfo.cs in the views folder to use below line  @jack
+                    //recommendation = this.kioskSettings.PersonalizedRecommendations.FirstOrDefault(r => r.Id.Equals(identifiedPerson.Person.Name, StringComparison.OrdinalIgnoreCase)); 
                 }
-
+                
+                // those who are new  @jack
                 if (recommendation == null)
                 {
-                    // Didn't find a personalized recommendation (or we don't have anyone recognized), so default to 
-                    // the age/gender-based generic recommendation
-                    Face face = imageWithFaces.DetectedFaces.First();
+                    // when the person is male  @jack
                     if (face.FaceAttributes.Gender.Equals("Male",StringComparison.OrdinalIgnoreCase))
                     {
-                        playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+                        if (face.FaceAttributes.Age <= 12)
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                            averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                        }
+                        else if (face.FaceAttributes.Age >= 60)
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                            averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                        }
+                        else
+                        {
+                            switch (analyzedAge)
+                            {
+                                case 20:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge= (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 30:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 40:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 50:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
+                    // when the person is female  @jack
                     else
                     {
-                        playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
+                        if (face.FaceAttributes.Age <= 12)
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                            averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                        }
+                        else if (face.FaceAttributes.Age >= 60)
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                            averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                        }
+                        else
+                        {
+                            switch (analyzedAge)
+                            {
+                                case 20:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 30:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 40:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                                case 50:
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                                    averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    imageInfoImage.Source = adImage;
+
+                                    imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                                    break;
+                            }
+                        }
                     }
 
 
                     //recommendation = this.kioskSettings.GetGenericRecommendationForPerson((int)face.FaceAttributes.Age, face.FaceAttributes.Gender);
                 }
             }
+            // for the couple  @jack
+            else if(numberOfPeople==2 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase)) && 
+                imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Female", StringComparison.OrdinalIgnoreCase)))
+            {
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You.ism/manifest(format=m3u8-aapl)")));
+
+                averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/ae962334-b864-404a-9142-7f51b2beda59/Shape_of_You_000001.png");
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "Type: " + "Couple of people" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+            }
+            // for the people  @jack
             else if (numberOfPeople > 1 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12) &&
                      imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age > 12))
             {
                 // Group with at least one child
                 //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "ChildWithOneOrMoreAdults");
+
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "Type: " + "People with children" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
             }
             else if (numberOfPeople > 1 && !imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
             {
                 // Group of adults without a child
-                //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "TwoOrMoreAdults");
+                // recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "TwoOrMoreAdults");
+
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+
+                averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)).ToString();
+
+                adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "Type: " + "Group of people" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+            }
+            else
+            {
+                
             }
         }
     }

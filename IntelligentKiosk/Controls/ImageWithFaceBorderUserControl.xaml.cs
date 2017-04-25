@@ -376,10 +376,5 @@ namespace IntelligentKiosk.Controls
         {
             await this.PreviewImageFaces();
         }
-
-        private void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {
-
-        }
     }
 }

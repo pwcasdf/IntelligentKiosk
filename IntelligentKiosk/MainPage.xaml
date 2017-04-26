@@ -125,7 +125,7 @@
                                     </Grid>
 
                                     <Grid Grid.Row="1">
-                                        <TextBlock x:Name="imageInfoDescription" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontSize="25" FontWeight="Light" Margin="10,5,10,5"/>
+                                        <TextBlock x:Name="imageInfoDescription" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
                                     </Grid>
                                 </Grid>
                             </Grid>

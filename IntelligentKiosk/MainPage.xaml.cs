@@ -261,6 +261,12 @@ namespace IntelligentKiosk
             media28.ArtUri = new Uri(thumbnailAddress("group_50"));
             playlistView.Media.Add(media28);
 
+            var media29 = new Models.MediaModel();
+            media29.Title = "Pororo Alphabet";
+            media29.MediaUri = new Uri(mediaAddress("group_childonly"));
+            media29.ArtUri = new Uri(thumbnailAddress("group_childonly"));
+            playlistView.Media.Add(media29);
+
 
             // Pre-cache all album art to facilitate smooth gapless transitions.
             // A production app would have a more sophisticated object cache.
@@ -801,6 +807,20 @@ namespace IntelligentKiosk
                 imageInfoTB.Text = "Type: " + "Children" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                 imageInfoDescription.Text = "온가족이 떠나는 아쿠아플래닛!!";
             }
+            // for the kids only  @jack
+            else if (numberOfPeople > 1 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
+            {
+                // Group with at least one child
+                //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "ChildWithOneOrMoreAdults");
+
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_childonly"))));
+
+                adImage.UriSource = new Uri(thumbnailAddress("group_childonly"));
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "Type: " + "Children only" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                imageInfoDescription.Text = "얘들아 반가워 다같이 알파벳 배워보자!!";
+            }
             else if (numberOfPeople > 1 && !imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
             {
                 // Group of adults without children
@@ -938,6 +958,8 @@ namespace IntelligentKiosk
                     return uriAddress = "";
                 case "group_60":
                     return uriAddress = "";
+                case "group_childonly":
+                    return uriAddress = "";
             }
 
             return uriAddress = "";
@@ -1004,6 +1026,8 @@ namespace IntelligentKiosk
                 case "group_50":
                     return uriAddress = "";
                 case "group_60":
+                    return uriAddress = "";
+                case "group_childonly":
                     return uriAddress = "";
             }
 

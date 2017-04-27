@@ -91,174 +91,174 @@ namespace IntelligentKiosk
             //single_male
             var media1 = new Models.MediaModel();
             media1.Title = "Pororo Alphabet";
-            media1.MediaUri = new Uri("");
-            media1.ArtUri = new Uri("");
+            media1.MediaUri = new Uri(mediaAddress("single_male_under10"));
+            media1.ArtUri = new Uri(thumbnailAddress("single_male_under10"));
             playlistView.Media.Add(media1);
-
+            
             var media2 = new Models.MediaModel();
             media2.Title = "Returning to farm";
-            media2.MediaUri = new Uri("");
-            media2.ArtUri = new Uri("");
+            media2.MediaUri = new Uri(mediaAddress("single_male_60"));
+            media2.ArtUri = new Uri(thumbnailAddress("single_male_60"));
             playlistView.Media.Add(media2);
 
             var media3 = new Models.MediaModel();
             media3.Title = "Onepiece";
-            media3.MediaUri = new Uri("");
-            media3.ArtUri = new Uri("");
+            media3.MediaUri = new Uri(mediaAddress("single_male_10"));
+            media3.ArtUri = new Uri(thumbnailAddress("single_male_10"));
             playlistView.Media.Add(media3);
 
             var media4 = new Models.MediaModel();
             media4.Title = "Tourism";
-            media4.MediaUri = new Uri("");
-            media4.ArtUri = new Uri("");
+            media4.MediaUri = new Uri(mediaAddress("single_male_20"));
+            media4.ArtUri = new Uri(thumbnailAddress("single_male_20"));
             playlistView.Media.Add(media4);
 
             var media5 = new Models.MediaModel();
             media5.Title = "Aventador";
-            media5.MediaUri = new Uri("");
-            media5.ArtUri = new Uri("");
+            media5.MediaUri = new Uri(mediaAddress("single_male_30"));
+            media5.ArtUri = new Uri(thumbnailAddress("single_male_30"));
             playlistView.Media.Add(media5);
 
             var media6 = new Models.MediaModel();
             media6.Title = "Johnnie Walker";
-            media6.MediaUri = new Uri("");
-            media6.ArtUri = new Uri("");
+            media6.MediaUri = new Uri(mediaAddress("single_male_40"));
+            media6.ArtUri = new Uri(thumbnailAddress("single_male_40"));
             playlistView.Media.Add(media6);
 
             var media7 = new Models.MediaModel();
             media7.Title = "Cruise Tour";
-            media7.MediaUri = new Uri("");
-            media7.ArtUri = new Uri("");
+            media7.MediaUri = new Uri(mediaAddress("single_male_50"));
+            media7.ArtUri = new Uri(thumbnailAddress("single_male_50"));
             playlistView.Media.Add(media7);
 
             //single_female
             var media8 = new Models.MediaModel();
             media8.Title = "Pororo color";
-            media8.MediaUri = new Uri("");
-            media8.ArtUri = new Uri("");
+            media8.MediaUri = new Uri(mediaAddress("single_female_under10"));
+            media8.ArtUri = new Uri(thumbnailAddress("single_female_under10"));
             playlistView.Media.Add(media8);
 
             var media9 = new Models.MediaModel();
             media9.Title = "Returning to farm";
-            media9.MediaUri = new Uri("");
-            media9.ArtUri = new Uri("");
+            media9.MediaUri = new Uri(mediaAddress("single_female_60"));
+            media9.ArtUri = new Uri(thumbnailAddress("single_female_60"));
             playlistView.Media.Add(media9);
 
             var media10 = new Models.MediaModel();
             media10.Title = "피 땀 눈물";
-            media10.MediaUri = new Uri("");
-            media10.ArtUri = new Uri("");
+            media10.MediaUri = new Uri(mediaAddress("single_female_10"));
+            media10.ArtUri = new Uri(thumbnailAddress("single_female_10"));
             playlistView.Media.Add(media10);
 
             var media11 = new Models.MediaModel();
             media11.Title = "MAC Lip Swatches";
-            media11.MediaUri = new Uri("");
-            media11.ArtUri = new Uri("");
+            media11.MediaUri = new Uri(mediaAddress("single_female_20"));
+            media11.ArtUri = new Uri(thumbnailAddress("single_female_20"));
             playlistView.Media.Add(media11);
 
             var media12 = new Models.MediaModel();
             media12.Title = "CELINE NANO TOTE";
-            media12.MediaUri = new Uri("");
-            media12.ArtUri = new Uri("");
+            media12.MediaUri = new Uri(mediaAddress("single_female_30"));
+            media12.ArtUri = new Uri(thumbnailAddress("single_female_30"));
             playlistView.Media.Add(media12);
 
             var media13 = new Models.MediaModel();
             media13.Title = "GYM - Return to 20's";
-            media13.MediaUri = new Uri("");
-            media13.ArtUri = new Uri("");
+            media13.MediaUri = new Uri(mediaAddress("single_female_40"));
+            media13.ArtUri = new Uri(thumbnailAddress("single_female_40"));
             playlistView.Media.Add(media13);
 
             var media14 = new Models.MediaModel();
             media14.Title = "Luxury house";
-            media14.MediaUri = new Uri("");
-            media14.ArtUri = new Uri("");
+            media14.MediaUri = new Uri(mediaAddress("single_female_50"));
+            media14.ArtUri = new Uri(thumbnailAddress("single_female_50"));
             playlistView.Media.Add(media14);
 
             //couple
             var media15 = new Models.MediaModel();
             media15.Title = "Pororo Rainbow color";
-            media15.MediaUri = new Uri("");
-            media15.ArtUri = new Uri("");
+            media15.MediaUri = new Uri(mediaAddress("couple_under10"));
+            media15.ArtUri = new Uri(thumbnailAddress("couple_under10"));
             playlistView.Media.Add(media15);
 
             var media16 = new Models.MediaModel();
             media16.Title = "Returning to farm";
-            media16.MediaUri = new Uri("");
-            media16.ArtUri = new Uri("");
+            media16.MediaUri = new Uri(mediaAddress("couple_60"));
+            media16.ArtUri = new Uri(thumbnailAddress("couple_60"));
             playlistView.Media.Add(media16);
 
             var media17 = new Models.MediaModel();
             media17.Title = "Happymove";
-            media17.MediaUri = new Uri("");
-            media17.ArtUri = new Uri("");
+            media17.MediaUri = new Uri(mediaAddress("couple_10"));
+            media17.ArtUri = new Uri(thumbnailAddress("couple_10"));
             playlistView.Media.Add(media17);
 
             var media18 = new Models.MediaModel();
             media18.Title = "EURO Trip!!";
-            media18.MediaUri = new Uri("");
-            media18.ArtUri = new Uri("");
+            media18.MediaUri = new Uri(mediaAddress("couple_20"));
+            media18.ArtUri = new Uri(thumbnailAddress("couple_20"));
             playlistView.Media.Add(media18);
 
             var media19 = new Models.MediaModel();
             media19.Title = "Wedding Event";
-            media19.MediaUri = new Uri("");
-            media19.ArtUri = new Uri("");
+            media19.MediaUri = new Uri(mediaAddress("couple_30"));
+            media19.ArtUri = new Uri(thumbnailAddress("couple_30"));
             playlistView.Media.Add(media19);
 
             var media20 = new Models.MediaModel();
             media20.Title = "Enjoy the little things arount you";
-            media20.MediaUri = new Uri("");
-            media20.ArtUri = new Uri("");
+            media20.MediaUri = new Uri(mediaAddress("couple_40"));
+            media20.ArtUri = new Uri(thumbnailAddress("couple_40"));
             playlistView.Media.Add(media20);
 
             var media21 = new Models.MediaModel();
             media21.Title = "Cruise Tour";
-            media21.MediaUri = new Uri("");
-            media21.ArtUri = new Uri("");
+            media21.MediaUri = new Uri(mediaAddress("couple_50"));
+            media21.ArtUri = new Uri(thumbnailAddress("couple_50"));
             playlistView.Media.Add(media21);
 
             //group_child
             var media22 = new Models.MediaModel();
             media22.Title = "Aqua Planet";
-            media22.MediaUri = new Uri("");
-            media22.ArtUri = new Uri("");
+            media22.MediaUri = new Uri(mediaAddress("group_child"));
+            media22.ArtUri = new Uri(thumbnailAddress("group_child"));
             playlistView.Media.Add(media22);
 
             //group
             var media23 = new Models.MediaModel();
             media23.Title = "Returning to farm";
-            media23.MediaUri = new Uri("");
-            media23.ArtUri = new Uri("");
+            media23.MediaUri = new Uri(mediaAddress("group_60"));
+            media23.ArtUri = new Uri(thumbnailAddress("group_60"));
             playlistView.Media.Add(media23);
 
             var media24 = new Models.MediaModel();
             media24.Title = "에버랜드 이용 꿀팁!!";
-            media24.MediaUri = new Uri("");
-            media24.ArtUri = new Uri("");
+            media24.MediaUri = new Uri(mediaAddress("group_10"));
+            media24.ArtUri = new Uri(thumbnailAddress("group_10"));
             playlistView.Media.Add(media24);
 
             var media25 = new Models.MediaModel();
             media25.Title = "TOEIC";
-            media25.MediaUri = new Uri("");
-            media25.ArtUri = new Uri("");
+            media25.MediaUri = new Uri(mediaAddress("group_20"));
+            media25.ArtUri = new Uri(thumbnailAddress("group_20"));
             playlistView.Media.Add(media25);
 
             var media26 = new Models.MediaModel();
             media26.Title = "Fuel your Passion";
-            media26.MediaUri = new Uri("");
-            media26.ArtUri = new Uri("");
+            media26.MediaUri = new Uri(mediaAddress("group_30"));
+            media26.ArtUri = new Uri(thumbnailAddress("group_30"));
             playlistView.Media.Add(media26);
 
             var media27 = new Models.MediaModel();
             media27.Title = "효도하세요, 효도!";
-            media27.MediaUri = new Uri("");
-            media27.ArtUri = new Uri("");
+            media27.MediaUri = new Uri(mediaAddress("group_40"));
+            media27.ArtUri = new Uri(thumbnailAddress("group_40"));
             playlistView.Media.Add(media27);
 
             var media28 = new Models.MediaModel();
             media28.Title = "Cruise Tour";
-            media28.MediaUri = new Uri("");
-            media28.ArtUri = new Uri("");
+            media28.MediaUri = new Uri(mediaAddress("group_50"));
+            media28.ArtUri = new Uri(thumbnailAddress("group_50"));
             playlistView.Media.Add(media28);
 
 
@@ -392,6 +392,11 @@ namespace IntelligentKiosk
 
         private void ProcessCameraCapture(ImageAnalyzer e)
         {
+            // remove the image and text from grid(it is right next to camera grid)  @jack
+            imageInfoImage.Source = null;
+            imageInfoTB.Text = "";
+            imageInfoDescription.Text = "";
+
             // if the image is null  @jack
             if (e == null)
             {
@@ -484,8 +489,13 @@ namespace IntelligentKiosk
         //camera trigger  @jack
         private async void ShowRecommendations(ImageAnalyzer imageWithFaces)
         {
+            // remove the image and text from grid(it is right next to camera grid)  @jack
+            imageInfoImage.Source = null;
+            imageInfoTB.Text = "";
+            imageInfoDescription.Text = "";
+
             // if there is no face on the image  @jack
-            if(imageWithFaces.DetectedFaces.Count()==0)
+            if (imageWithFaces.DetectedFaces.Count()==0)
             {
                 this.photoCaptureBalloonHost.Opacity = 0.6;
 
@@ -538,9 +548,9 @@ namespace IntelligentKiosk
                     {
                         if (averageAge < 10)
                         {
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_under10"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("single_male_under10"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -548,9 +558,9 @@ namespace IntelligentKiosk
                         }
                         else if (averageAge >= 60)
                         {
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_60"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("single_male_60"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -561,49 +571,49 @@ namespace IntelligentKiosk
                             switch (analyzedAge_Single)
                             {
                                 case 10:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_10"))));
 
                                     averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_male_10"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "따분한 수업보단 원피스를 찾아 떠나는 것은 어떤가요?";
                                     break;
                                 case 20:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_20"))));
 
                                     averageAge= imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_male_20"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "청춘이여, 지금 떠나세요!!";
                                     break;
                                 case 30:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_30"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_male_30"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "당신의 출근시간을 책임져 줄 남자의 자동차를 소개드립니다.";
                                     break;
                                 case 40:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_40"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_male_40"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "직장에선 worker, 지인과는 Johnnie Walker!!";
                                     break;
                                 case 50:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_50"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_male_50"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -619,9 +629,9 @@ namespace IntelligentKiosk
                     {
                         if (averageAge < 10)
                         {
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_under10"))));
                             
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("single_female_under10"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -629,9 +639,9 @@ namespace IntelligentKiosk
                         }
                         else if (averageAge >= 60)
                         {
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_60"))));
                             
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("single_female_60"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -642,45 +652,45 @@ namespace IntelligentKiosk
                             switch (analyzedAge_Single)
                             {
                                 case 10:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_10"))));
 
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_female_10"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "오늘, 방탄소년단의 '피 땀 눈물'을 50%할인된 가격으로 만나보세요.";
                                     break;
                                 case 20:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_20"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_female_20"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "키스를 부르는 입술, 오늘만 특가 할인!!";
                                     break;
                                 case 30:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_30"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_female_30"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "당신의 품격을 한층 더 높여 드립니다.";
                                     break;
                                 case 40:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_40"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_female_40"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                                     imageInfoDescription.Text = "다시 20대의 몸매로 돌아가고 싶다면, 등록하세요!!";
                                     break;
                                 case 50:
-                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_50"))));
                                     
-                                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                                    adImage.UriSource = new Uri(thumbnailAddress("single_female_50"));
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -700,9 +710,9 @@ namespace IntelligentKiosk
             {
                 if (averageAge < 10)
                 {
-                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_under10"))));
 
-                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                    adImage.UriSource = new Uri(thumbnailAddress("couple_under10"));
                     imageInfoImage.Source = adImage;
 
                     imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -710,9 +720,9 @@ namespace IntelligentKiosk
                 }
                 else if (averageAge >= 60)
                 {
-                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_60"))));
 
-                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                    adImage.UriSource = new Uri(thumbnailAddress("couple_60"));
                     imageInfoImage.Source = adImage;
 
                     imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -723,49 +733,49 @@ namespace IntelligentKiosk
                     switch (analyzedAge_Group)
                     {
                         case 10:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_10"))));
 
                             averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("couple_10"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "학생 커플 여러분, 취미로 의미있는 봉사활동 어떠신가요?";
                             break;
                         case 20:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_20"))));
 
                             averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)");
+                            adImage.UriSource = new Uri(thumbnailAddress("couple_20"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "젊을때 떠나야죠!! [커플여행] 유럽 여행 어떠신가요~?";
                             break;
                         case 30:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_30"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("couple_30"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "결혼 적령기인 30대 커플, 이러한 이벤트는 어떠신가요?";
                             break;
                         case 40:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_40"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("couple_40"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "아무리 일, 돈이 중요하지만 결코 사소한 행복을 놓치지 마세요.";
                             break;
                         case 50:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("couple_50"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("couple_50"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "Couple of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -783,9 +793,9 @@ namespace IntelligentKiosk
                 // Group with at least one child
                 //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "ChildWithOneOrMoreAdults");
 
-                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_child"))));
 
-                adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                adImage.UriSource = new Uri(thumbnailAddress("group_child"));
                 imageInfoImage.Source = adImage;
 
                 imageInfoTB.Text = "Type: " + "Children" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -798,9 +808,9 @@ namespace IntelligentKiosk
 
                 if (averageAge >= 60)
                 {
-                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                    playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_60"))));
 
-                    adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                    adImage.UriSource = new Uri(thumbnailAddress("group_60"));
                     imageInfoImage.Source = adImage;
 
                     imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -811,49 +821,49 @@ namespace IntelligentKiosk
                     switch (analyzedAge_Group)
                     {
                         case 10:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_10"))));
 
                             averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("group_60"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "신나고 재밌는 에버랜드로 오세요~!!";
                             break;
                         case 20:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_20"))));
 
                             averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("group_20"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "신발사이즈 토익점수에서 이번 기회에 벗어나세요!!";
                             break;
                         case 30:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_30"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/8b4077ab-b80a-4cd2-8aa5-468f63fe2795/Something_just_like_this_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("group_30"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "여러분, 젊음이 가기전에 모든것을 즐기세요~!";
                             break;
                         case 40:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_40"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("group_40"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                             imageInfoDescription.Text = "아직 늦지 않았습니다. 오늘 전화하세요.";
                             break;
                         case 50:
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars.ism/manifest(format=m3u8-aapl)")));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_50"))));
 
-                            adImage.UriSource = new Uri("http://seteam.streaming.mediaservices.windows.net/e7b90ad1-38a4-442e-9357-7ecdac66bf21/A_Sky_Full_Of_Stars_000001.png");
+                            adImage.UriSource = new Uri(thumbnailAddress("group_50"));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
@@ -864,6 +874,140 @@ namespace IntelligentKiosk
                     }
                 }
             }
+        }
+
+        string mediaAddress(string analyzedFace)
+        {
+            string uriAddress = null;
+
+            switch (analyzedFace)
+            {
+                case "single_male_under10":
+                    return uriAddress = "";
+                case "single_male_10":
+                    return uriAddress = "";
+                case "single_male_20":
+                    return uriAddress = "";
+                case "single_male_30":
+                    return uriAddress = "";
+                case "single_male_40":
+                    return uriAddress = "";
+                case "single_male_50":
+                    return uriAddress = "";
+                case "single_male_60":
+                    return uriAddress = "";
+                case "single_female_under10":
+                    return uriAddress = "";
+                case "single_female_10":
+                    return uriAddress = "";
+                case "single_female_20":
+                    return uriAddress = "";
+                case "single_female_30":
+                    return uriAddress = "";
+                case "single_female_40":
+                    return uriAddress = "";
+                case "single_female_50":
+                    return uriAddress = "";
+                case "single_female_60":
+                    return uriAddress = "";
+                case "couple_under10":
+                    return uriAddress = "";
+                case "couple_10":
+                    return uriAddress = "";
+                case "couple_20":
+                    return uriAddress = "";
+                case "couple_30":
+                    return uriAddress = "";
+                case "couple_40":
+                    return uriAddress = "";
+                case "couple_50":
+                    return uriAddress = "";
+                case "couple_60":
+                    return uriAddress = "";
+                case "group_child":
+                    return uriAddress = "";
+                case "group_10":
+                    return uriAddress = "";
+                case "group_20":
+                    return uriAddress = "";
+                case "group_30":
+                    return uriAddress = "";
+                case "group_40":
+                    return uriAddress = "";
+                case "group_50":
+                    return uriAddress = "";
+                case "group_60":
+                    return uriAddress = "";
+            }
+
+            return uriAddress = "";
+        }
+
+        string thumbnailAddress(string analyzedFace)
+        {
+            string uriAddress = null;
+
+            switch (analyzedFace)
+            {
+                case "single_male_under10":
+                    return uriAddress = "";
+                case "single_male_10":
+                    return uriAddress = "";
+                case "single_male_20":
+                    return uriAddress = "";
+                case "single_male_30":
+                    return uriAddress = "";
+                case "single_male_40":
+                    return uriAddress = "";
+                case "single_male_50":
+                    return uriAddress = "";
+                case "single_male_60":
+                    return uriAddress = "";
+                case "single_female_under10":
+                    return uriAddress = "";
+                case "single_female_10":
+                    return uriAddress = "";
+                case "single_female_20":
+                    return uriAddress = "";
+                case "single_female_30":
+                    return uriAddress = "";
+                case "single_female_40":
+                    return uriAddress = "";
+                case "single_female_50":
+                    return uriAddress = "";
+                case "single_female_60":
+                    return uriAddress = "";
+                case "couple_under10":
+                    return uriAddress = "";
+                case "couple_10":
+                    return uriAddress = "";
+                case "couple_20":
+                    return uriAddress = "";
+                case "couple_30":
+                    return uriAddress = "";
+                case "couple_40":
+                    return uriAddress = "";
+                case "couple_50":
+                    return uriAddress = "";
+                case "couple_60":
+                    return uriAddress = "";
+                case "group_child":
+                    return uriAddress = "";
+                case "group_10":
+                    return uriAddress = "";
+                case "group_20":
+                    return uriAddress = "";
+                case "group_30":
+                    return uriAddress = "";
+                case "group_40":
+                    return uriAddress = "";
+                case "group_50":
+                    return uriAddress = "";
+                case "group_60":
+                    return uriAddress = "";
+            }
+
+            return uriAddress = "";
         }
     }
 }

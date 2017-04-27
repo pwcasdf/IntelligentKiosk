@@ -22,7 +22,7 @@
 
             <!-- Top row  @Jack -->
             <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Intelligent Kiost" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                <TextBlock Text="Intelligent Kiosk" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" FontSize="40" FontWeight="Bold"/>
             </StackPanel>
 
             <!-- Second Top row (media service area)  @Jack -->
@@ -98,11 +98,46 @@
 
 
                             </Grid>
+
+                            <Grid Grid.Column="1" x:Name="captureInfo">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.2*"/>
+                                    <RowDefinition Height="0.3*"/>
+                                    <RowDefinition Height="0.5*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <TextBlock Foreground="White" Text="Image Info" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <TextBlock x:Name="imageInfoTB" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.7*"/>
+                                        <RowDefinition Height="0.3*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Image x:Name="imageInfoImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+                                        <TextBlock x:Name="imageInfoDescription" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
 
                         <!-- bottom left ballon  @jack -->
                         <Grid Name="photoCaptureBalloonHost" Grid.Row="0" Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,50,0,0">
                             <Grid Margin="10,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="0*"/>
+                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -122,6 +157,18 @@
                                 </Border>
                             </Grid>
                         </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                     </Grid>
 
                     

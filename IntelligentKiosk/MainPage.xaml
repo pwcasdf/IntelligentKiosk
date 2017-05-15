@@ -11,7 +11,7 @@
 
     <!-- Overall Grid  @Jack -->
     <Grid Background="Black">
-        
+
         <!-- Page row Grid  @Jack -->
         <Grid x:Name="RootGrid" Margin="12,20,12,12">
             <Grid.RowDefinitions>
@@ -160,18 +160,15 @@
                     </Grid>
 
                     <Grid Grid.Row="1">
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                        <!--Barcode here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="textBox" Grid.Row="0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Width="400" Background="Black" Foreground="White" KeyUp="textBox_KeyUp" KeyDown="textBox_KeyDown" BorderThickness="0" RenderTransformOrigin="0.496,0.547" Height="50" IsReadOnly="True"/>
+                        <TextBox x:Name="textBox1" Grid.Row="1" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" TextAlignment="Center" Width="400" Height="50" Background="Black" Foreground="White" BorderThickness="0" IsReadOnly="True"/>
                     </Grid>
 
-                    
+
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -179,7 +176,7 @@
 
                     <TextBlock x:Name="txtCurrentTrack" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
                     <TextBlock x:Name="txtCurrentState" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,50,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
-                    
+
                 </Grid>
             </Grid>
 

@@ -71,6 +71,9 @@ namespace IntelligentKiosk
             this.cameraControl.FilterOutSmallFaces = true;
             this.cameraControl.AutoCaptureStateChanged += CameraControl_AutoCaptureStateChanged;
             this.cameraControl.CameraAspectRatioChanged += CameraControl_CameraAspectRatioChanged;
+
+
+            cameraControl.Focus(FocusState.Keyboard);
         }
 
 
@@ -261,6 +264,12 @@ namespace IntelligentKiosk
             media28.ArtUri = new Uri(thumbnailAddress("group_50"));
             playlistView.Media.Add(media28);
 
+            var media29 = new Models.MediaModel();
+            media29.Title = "Pororo Alphabet";
+            media29.MediaUri = new Uri(mediaAddress("group_childonly"));
+            media29.ArtUri = new Uri(thumbnailAddress("group_childonly"));
+            playlistView.Media.Add(media29);
+
 
             // Pre-cache all album art to facilitate smooth gapless transitions.
             // A production app would have a more sophisticated object cache.
@@ -371,7 +380,7 @@ namespace IntelligentKiosk
                     this.cameraGuideBallon.Opacity = 0;
 
                     this.cameraGuideCountdownHost.Opacity = 1;
-                    
+
                     this.countDownTextBlock.Text = "3";
                     await Task.Delay(1000);
                     this.countDownTextBlock.Text = "2";
@@ -380,7 +389,12 @@ namespace IntelligentKiosk
                     await Task.Delay(1000);
                     this.cameraGuideCountdownHost.Opacity = 0;
 
+                    textBox.Text = "";
+                    last_time = DateTime.Now;
+                    textBox.IsReadOnly = false;
+                    textBox.Focus(FocusState.Keyboard);
                     this.ProcessCameraCapture(await this.cameraControl.TakeAutoCapturePhoto());
+                    stop_read = true;
                     break;
                 case AutoCaptureState.ShowingCapturedPhoto:
                     this.cameraGuideHost.Opacity = 0;
@@ -801,6 +815,20 @@ namespace IntelligentKiosk
                 imageInfoTB.Text = "Type: " + "Children" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
                 imageInfoDescription.Text = "온가족이 떠나는 아쿠아플래닛!!";
             }
+            // for the kids only  @jack
+            else if (numberOfPeople > 1 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
+            {
+                // Group with at least one child
+                //recommendation = this.kioskSettings.GenericRecommendations.FirstOrDefault(r => r.Id == "ChildWithOneOrMoreAdults");
+
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_childonly"))));
+
+                adImage.UriSource = new Uri(thumbnailAddress("group_childonly"));
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "Type: " + "Children only" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
+                imageInfoDescription.Text = "얘들아 반가워 다같이 알파벳 배워보자!!";
+            }
             else if (numberOfPeople > 1 && !imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Age <= 12))
             {
                 // Group of adults without children
@@ -938,6 +966,8 @@ namespace IntelligentKiosk
                     return uriAddress = "";
                 case "group_60":
                     return uriAddress = "";
+                case "group_childonly":
+                    return uriAddress = "";
             }
 
             return uriAddress = "";
@@ -1005,9 +1035,44 @@ namespace IntelligentKiosk
                     return uriAddress = "";
                 case "group_60":
                     return uriAddress = "";
+                case "group_childonly":
+                    return uriAddress = "";
             }
 
             return uriAddress = "";
         }
+
+        DateTime last_time = DateTime.Now;
+        private void textBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            last_time = DateTime.Now;
+            if (textBox.Text == "12345678") textBox1.Text = "가나 초콜릿";
+            else if (textBox.Text == "23456789") textBox1.Text = "맥스봉";
+            else if (textBox.Text == "34567890") textBox1.Text = "m&m 또는 스니커즈 초코바";
+            //else if (textBox.Text == "123456789") textBox1.Text = "A";
+            //else if (textBox.Text == "8808739000054") textBox1.Text = "B";
+            //else if (textBox.Text == "erty87670000") textBox1.Text = "C";
+            //else if (textBox.Text == "qwer567800") textBox1.Text = "A";
+            //else if (textBox.Text == "789bnmeywo00") textBox1.Text = "B";
+            //else if (textBox.Text == "zxas345600") textBox1.Text = "C";
+            else textBox1.Text = "";
+        }
+        bool stop_read = false;
+        private void textBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(((TextBox)sender).Text.Length == 0) last_time = DateTime.Now;
+            if (DateTime.Now > last_time.AddMilliseconds(200) && ((TextBox)sender).Text.Length > 0)
+            {
+                if (stop_read)
+                {
+                    textBox.IsReadOnly = true;
+                    cameraControl.Focus(FocusState.Keyboard);
+                }
+                else
+                    ((TextBox)sender).Text = "";
+            }
+        }
+        
+        
     }
 }

@@ -7,4 +7,4 @@ Work in progress
 
 See attached video how it looks like
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vXOdG-dNp9I" frameborder="0" allowfullscreen></iframe>
+[![intelligentKiosk](https://img.youtube.com/vi/vXOdG-dNp9I/0.jpg)](https://www.youtube.com/watch?v=vXOdG-dNp9I)

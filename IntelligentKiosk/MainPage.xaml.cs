@@ -61,7 +61,7 @@ namespace IntelligentKiosk
         public MainPage()
         {
             this.InitializeComponent();
-            
+
             InitializePlaybackList();
             mediaElement.CurrentStateChanged += MediaElement_CurrentStateChanged;
             playlistView.ItemClick += PlaylistView_ItemClick;
@@ -95,8 +95,8 @@ namespace IntelligentKiosk
 
             var media1 = new Models.MediaModel();
             media1.Title = "NeoIDM";
-            media1.MediaUri = new Uri(mediaAddress("hancommds"));
-            media1.ArtUri = new Uri(thumbnailAddress("hancommds"));
+            media1.MediaUri = new Uri(mediaAddress(""));
+            media1.ArtUri = new Uri(thumbnailAddress(""));
             playlistView.Media.Add(media1);
 
 
@@ -284,7 +284,7 @@ namespace IntelligentKiosk
             media31.ArtUri = new Uri(thumbnailAddress("single_male_under10"));
             playlistView.Media.Add(media31);
 
-            
+
 
             // Pre-cache all album art to facilitate smooth gapless transitions.
             // A production app would have a more sophisticated object cache.
@@ -348,7 +348,7 @@ namespace IntelligentKiosk
             // Start the background task if it wasn't running
             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == item.MediaUri));
         }
-        
+
         /***************************************************************************
          ***************************************************************************
          ******************************* camera work *******************************  @jack
@@ -452,7 +452,7 @@ namespace IntelligentKiosk
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             EnterKioskMode();
-            
+
             await this.cameraControl.StartStreamAsync();
 
             mediaElement.SetPlaybackSource(playbackList);
@@ -518,7 +518,7 @@ namespace IntelligentKiosk
             imageInfoDescription.Text = "";
 
             // if there is no face on the image  @jack
-            if (imageWithFaces.DetectedFaces.Count()==0)
+            if (imageWithFaces.DetectedFaces.Count() == 0)
             {
                 this.photoCaptureBalloonHost.Opacity = 0.6;
 
@@ -548,7 +548,7 @@ namespace IntelligentKiosk
             int analyzedAge_Single = ((int)face.FaceAttributes.Age / 10) * 10;
             double averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age));
             int analyzedAge_Group = (((int)imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)) / 10) * 10;
-            
+
             var adImage = new BitmapImage();
 
             int flag = 0;
@@ -565,14 +565,14 @@ namespace IntelligentKiosk
             if (numberOfPeople == 1)
             {
                 IdentifiedPerson identifiedPerson = imageWithFaces.IdentifiedPersons.FirstOrDefault();
-                
+
                 // those who identified  @jack
                 if (identifiedPerson != null)
                 {
                     // for identified person, need to chanage the TrigerInfo.cs in the views folder to use below line  @jack
                     //recommendation = this.kioskSettings.PersonalizedRecommendations.FirstOrDefault(r => r.Id.Equals(identifiedPerson.Person.Name, StringComparison.OrdinalIgnoreCase)); 
                 }
-                
+
                 // those who are new  @jack
                 if (recommendation == null)
                 {
@@ -580,7 +580,7 @@ namespace IntelligentKiosk
                     {
                         string names = imageWithFaces.IdentifiedPersons.Count() > 1 ? string.Join(", ", imageWithFaces.IdentifiedPersons.Select(p => p.Person.Name)) : imageWithFaces.IdentifiedPersons.First().Person.Name;
 
-                        if (flag>0)
+                        if (flag > 0)
                         {
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("jack"))));
 
@@ -592,24 +592,24 @@ namespace IntelligentKiosk
                             flag = 0;
                             return;
                         }
-                        else if (imageWithFaces.IdentifiedPersons.Count()>1)
+                        else if (imageWithFaces.IdentifiedPersons.Count() > 1)
                         {
                             //return string.Format("Welcome back, {0} and company!", names);
 
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("hancommds"))));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress(""))));
 
-                            adImage.UriSource = new Uri(thumbnailAddress("hancommds"));
+                            adImage.UriSource = new Uri(thumbnailAddress(""));
                             imageInfoImage.Source = adImage;
 
-                            imageInfoTB.Text = "" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name +" 님들" + "\n" + "반갑습니다.";
+                            imageInfoTB.Text = "" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name + " 님들" + "\n" + "반갑습니다.";
                             imageInfoDescription.Text = "직원 여러분들 환영합니다~~~~~!!!!!!!!";
                             return;
                         }
                         else
                         {
-                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("hancommds"))));
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress(""))));
 
-                            adImage.UriSource = new Uri(thumbnailAddress("hancommds"));
+                            adImage.UriSource = new Uri(thumbnailAddress(""));
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name + " 님" + "\n" + "반갑습니다.";
@@ -618,7 +618,7 @@ namespace IntelligentKiosk
                         }
                     }
                     // when the person is male  @jack
-                    else if (face.FaceAttributes.Gender.Equals("Male",StringComparison.OrdinalIgnoreCase))
+                    else if (face.FaceAttributes.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase))
                     {
                         if (averageAge < 10)
                         {
@@ -658,7 +658,7 @@ namespace IntelligentKiosk
                                 case 20:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_20"))));
 
-                                    averageAge= imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
+                                    averageAge = imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age);
 
                                     adImage.UriSource = new Uri(thumbnailAddress("single_male_20"));
                                     imageInfoImage.Source = adImage;
@@ -668,7 +668,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 30:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_30"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_male_30"));
                                     imageInfoImage.Source = adImage;
 
@@ -677,7 +677,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 40:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_40"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_male_40"));
                                     imageInfoImage.Source = adImage;
 
@@ -686,7 +686,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 50:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_50"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_male_50"));
                                     imageInfoImage.Source = adImage;
 
@@ -704,7 +704,7 @@ namespace IntelligentKiosk
                         if (averageAge < 10)
                         {
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_under10"))));
-                            
+
                             adImage.UriSource = new Uri(thumbnailAddress("single_female_under10"));
                             imageInfoImage.Source = adImage;
 
@@ -714,7 +714,7 @@ namespace IntelligentKiosk
                         else if (averageAge >= 60)
                         {
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_60"))));
-                            
+
                             adImage.UriSource = new Uri(thumbnailAddress("single_female_60"));
                             imageInfoImage.Source = adImage;
 
@@ -736,7 +736,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 20:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_20"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_female_20"));
                                     imageInfoImage.Source = adImage;
 
@@ -745,7 +745,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 30:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_30"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_female_30"));
                                     imageInfoImage.Source = adImage;
 
@@ -754,7 +754,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 40:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_40"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_female_40"));
                                     imageInfoImage.Source = adImage;
 
@@ -763,7 +763,7 @@ namespace IntelligentKiosk
                                     break;
                                 case 50:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_50"))));
-                                    
+
                                     adImage.UriSource = new Uri(thumbnailAddress("single_female_50"));
                                     imageInfoImage.Source = adImage;
 
@@ -779,7 +779,7 @@ namespace IntelligentKiosk
                 }
             }
             // for the couple  @jack
-            else if (flag>0)
+            else if (flag > 0)
             {
                 playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("jack"))));
 
@@ -791,7 +791,7 @@ namespace IntelligentKiosk
                 flag = 0;
                 return;
             }
-            else if(numberOfPeople==2 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase)) && 
+            else if (numberOfPeople == 2 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase)) &&
                 imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Female", StringComparison.OrdinalIgnoreCase)))
             {
                 if (averageAge < 10)

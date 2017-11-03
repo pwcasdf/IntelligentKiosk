@@ -95,8 +95,8 @@ namespace IntelligentKiosk
 
             var media1 = new Models.MediaModel();
             media1.Title = "NeoIDM";
-            media1.MediaUri = new Uri(mediaAddress(""));
-            media1.ArtUri = new Uri(thumbnailAddress(""));
+            media1.MediaUri = new Uri(mediaAddress("hancommds"));
+            media1.ArtUri = new Uri(thumbnailAddress("hancommds"));
             playlistView.Media.Add(media1);
 
 
@@ -548,14 +548,24 @@ namespace IntelligentKiosk
             int analyzedAge_Single = ((int)face.FaceAttributes.Age / 10) * 10;
             double averageAge = (imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age));
             int analyzedAge_Group = (((int)imageWithFaces.DetectedFaces.Average(f => (double)f.FaceAttributes.Age)) / 10) * 10;
-
-            var adImage = new BitmapImage();
             
+            var adImage = new BitmapImage();
+
+            int flag = 0;
+            foreach (var a in imageWithFaces.IdentifiedPersons.ToList())
+            {
+                if (a.Person.Name == "사람_이름")
+                {
+                    flag++;
+                    break;
+                }
+            }
+
             // for single person  @jack
             if (numberOfPeople == 1)
             {
                 IdentifiedPerson identifiedPerson = imageWithFaces.IdentifiedPersons.FirstOrDefault();
-
+                
                 // those who identified  @jack
                 if (identifiedPerson != null)
                 {
@@ -570,15 +580,16 @@ namespace IntelligentKiosk
                     {
                         string names = imageWithFaces.IdentifiedPersons.Count() > 1 ? string.Join(", ", imageWithFaces.IdentifiedPersons.Select(p => p.Person.Name)) : imageWithFaces.IdentifiedPersons.First().Person.Name;
 
-                        if (imageWithFaces.IdentifiedPersons.First().Person.Name=="박원철 주임")
+                        if (flag>0)
                         {
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("jack"))));
 
                             adImage.UriSource = new Uri(thumbnailAddress("jack"));
                             imageInfoImage.Source = adImage;
 
-                            imageInfoTB.Text = "재방문 감사합니다." + "\n" + "" + imageWithFaces.IdentifiedPersons.First().Person.Name + "님." + "\n" + "반갑습니다." + "\n" + "지난번에 구입하신 아이스크림은 어떠셨나요?" + "\n" + "오늘 이 제품은 어떠신가요?";
-                            imageInfoDescription.Text = "정말 귀엽죠?";
+                            imageInfoTB.Text = "재방문 감사합니다." + "\n" + " " + imageWithFaces.IdentifiedPersons.First().Person.Name + "님." + "\n" + "반갑습니다." + "\n" + "지난번에 구입하신 아이스크림은 어떠셨나요?" + "\n" + "오늘 이 제품은 어떠신가요?";
+                            imageInfoDescription.Text = "고객 맞춤 신상품 광고";
+                            flag = 0;
                             return;
                         }
                         else if (imageWithFaces.IdentifiedPersons.Count()>1)
@@ -601,7 +612,7 @@ namespace IntelligentKiosk
                             adImage.UriSource = new Uri(thumbnailAddress("hancommds"));
                             imageInfoImage.Source = adImage;
 
-                            imageInfoTB.Text = "한컴MDS" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name + " 님" + "\n" + "반갑습니다.";
+                            imageInfoTB.Text = "" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name + " 님" + "\n" + "반갑습니다.";
                             imageInfoDescription.Text = "환영합니다~~~~~!!!!!!!!";
                             return;
                         }
@@ -768,6 +779,18 @@ namespace IntelligentKiosk
                 }
             }
             // for the couple  @jack
+            else if (flag>0)
+            {
+                playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("jack"))));
+
+                adImage.UriSource = new Uri(thumbnailAddress("jack"));
+                imageInfoImage.Source = adImage;
+
+                imageInfoTB.Text = "재방문 감사합니다." + "\n" + "" + imageWithFaces.IdentifiedPersons.First().Person.Name + "님." + "\n" + "반갑습니다." + "\n" + "지난번에 구입하신 아이스크림은 어떠셨나요?" + "\n" + "오늘 이 제품은 어떠신가요?";
+                imageInfoDescription.Text = "고객 맞춤 신상품 광고";
+                flag = 0;
+                return;
+            }
             else if(numberOfPeople==2 && imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase)) && 
                 imageWithFaces.DetectedFaces.Any(f => f.FaceAttributes.Gender.Equals("Female", StringComparison.OrdinalIgnoreCase)))
             {

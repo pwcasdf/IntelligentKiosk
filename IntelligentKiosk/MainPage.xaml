@@ -22,7 +22,7 @@
 
             <!-- Top row  @Jack -->
             <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Intelligent Kiosk" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" FontSize="40" FontWeight="Bold"/>
+                <TextBlock Text="사용자 맞춤형 키오스크" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" FontSize="40" FontWeight="Bold"/>
             </StackPanel>
 
             <!-- Second Top row (media service area)  @Jack -->
@@ -40,142 +40,129 @@
 
                 <!-- Bottom row, left column, Row Grid  @Jack -->
                 <Grid x:Name="bottomGridLeft" Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.7*"/>
-                        <RowDefinition Height="0.3*"/>
-                    </Grid.RowDefinitions>
-
                     <!-- Assigning Entire left and right grid for camera and description section  @jack -->
-                    <Grid Grid.Row="0">
                         <!-- Bottom row, left colume, top row, Column Grid  @Jack -->
-                        <Grid x:Name="bottomLeftGridTop" Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.6*"/>
-                                <ColumnDefinition Width="0.4*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid x:Name="bottomLeftGridTop">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"/>
+                            <ColumnDefinition Width="0.4*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <!-- preview Frame & photo Frame  @jack -->
-                            <Grid x:Name="cameraHostGrid" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <ctl:CameraControl x:Name="cameraControl"/>
-                                <ctl:ImageWithFaceBorderUserControl BalloonBackground="White" BalloonForeground="Black"  
+                        <!-- preview Frame & photo Frame  @jack -->
+                        <Grid x:Name="cameraHostGrid" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ctl:CameraControl x:Name="cameraControl"/>
+                            <ctl:ImageWithFaceBorderUserControl BalloonBackground="White" BalloonForeground="Black"  
                                                                     FlowDirection="RightToLeft" x:Name="imageFromCameraWithFaces" 
                                                                     DetectFacesOnLoad="True" DetectFaceAttributes="True" 
                                                                     ShowMultipleFaces="True" PerformRecognition="True" 
                                                                     ShowRecognitionResults="True" ShowDialogOnApiErrors="True" />
-                            </Grid>
+                        </Grid>
 
-                            <!-- upper right ballon  @jack -->
-                            <Grid Grid.Column="0" x:Name="cameraGuideHost">
-                                <Grid Name="cameraGuideBallon" Grid.Row="0"  VerticalAlignment="Top" 
+                        <!-- upper right ballon  @jack -->
+                        <Grid Grid.Column="0" x:Name="cameraGuideHost">
+                            <Grid Name="cameraGuideBallon" Grid.Row="0"  VerticalAlignment="Top" 
                                       HorizontalAlignment="Right" Opacity="0.6" Margin="0,0,10,0" Width="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
 
-                                    <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0" 
+                                <Polyline StrokeThickness="0" Grid.Row="0" Margin="10,0,0,0" 
                                           VerticalAlignment="Top" HorizontalAlignment="Left" 
                                           Points="0,0,0,10,12,10" Fill="White" />
 
-                                    <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
-                                        <TextBlock x:Name="cameraGuideText" Foreground="Black" Text="Come closer to take a photo!!" 
+                                <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
+                                    <TextBlock x:Name="cameraGuideText" Foreground="Black" Text="Come closer to take a photo!!" 
                                                Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="ExtraBold"/>
-                                    </Border>
-                                </Grid>
-
-                                <!-- counting down for a photo  @jack -->
-                                <Grid Name="cameraGuideCountdownHost">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.05*"/>
-                                        <RowDefinition/>
-                                        <RowDefinition Height="0.2*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Viewbox Grid.Row="1">
-                                        <TextBlock Name="countDownTextBlock" Foreground="White" FontWeight="Bold" Opacity="0.4"  />
-                                    </Viewbox>
-                                </Grid>
-
-
+                                </Border>
                             </Grid>
 
-                            <Grid Grid.Column="1" x:Name="captureInfo">
+                            <!-- counting down for a photo  @jack -->
+                            <Grid Name="cameraGuideCountdownHost">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.05*"/>
+                                    <RowDefinition/>
                                     <RowDefinition Height="0.2*"/>
-                                    <RowDefinition Height="0.3*"/>
-                                    <RowDefinition Height="0.5*"/>
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0">
-                                    <TextBlock Foreground="White" Text="Image Info" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="1">
-                                    <TextBlock x:Name="imageInfoTB" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
-                                </Grid>
-
-                                <Grid Grid.Row="2">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.7*"/>
-                                        <RowDefinition Height="0.3*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid Grid.Row="0">
-                                        <Image x:Name="imageInfoImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-
-                                    <Grid Grid.Row="1">
-                                        <TextBlock x:Name="imageInfoDescription" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
-                                    </Grid>
-                                </Grid>
+                                <Viewbox Grid.Row="1">
+                                    <TextBlock Name="countDownTextBlock" Foreground="White" FontWeight="Bold" Opacity="0.4"  />
+                                </Viewbox>
                             </Grid>
                         </Grid>
 
-                        <!-- bottom left ballon  @jack -->
-                        <Grid Name="photoCaptureBalloonHost" Grid.Row="0" Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,50,0,0">
-                            <Grid Margin="10,0,0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="0*"/>
-                                </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1" x:Name="captureInfo">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.5*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <TextBlock Foreground="White" Text="캡처된 이미지 분석" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <TextBlock x:Name="imageInfoTB" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="0.7*"/>
+                                    <RowDefinition Height="0.3*"/>
                                 </Grid.RowDefinitions>
 
-                                <Polyline StrokeThickness="0" Grid.Row="0" Margin="0,0,10,0" 
+                                <Grid Grid.Row="0">
+                                    <Image x:Name="imageInfoImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <TextBlock x:Name="imageInfoDescription" Foreground="White" Text="" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Light" Margin="10,5,10,5"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                        <!-- bottom left ballon  @jack -->
+                    <Grid Name="photoCaptureBalloonHost" Grid.Row="0" Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,50,0,0">
+                        <Grid Margin="10,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Polyline StrokeThickness="0" Grid.Row="0" Margin="0,0,10,0" 
                                               VerticalAlignment="Top" 
                                               HorizontalAlignment="Right" 
                                               Points="10,0,10,10,-5,10" Fill="White" />
 
-                                <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
-                                    <StackPanel>
-                                        <TextBlock Foreground="Black" Text="Hello there!&#10;Next shot will begin shortly" 
+                            <Border Grid.Row="1" Background="White" Padding="10,5,10,5">
+                                <StackPanel>
+                                    <TextBlock Foreground="Black" Text="Hello there!&#10;Next shot will begin shortly" 
                                                Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="ExtraBold" />
-                                        <ProgressBar x:Name="resultDisplayTimerUI" Height="6" Opacity="0.8" Margin="0,6,0,0" Foreground="#f8f7bb" VerticalAlignment="Bottom" />
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
+                                    <ProgressBar x:Name="resultDisplayTimerUI" Height="6" Opacity="0.8" Margin="0,6,0,0" Foreground="#f8f7bb" VerticalAlignment="Bottom" />
+                                </StackPanel>
+                            </Border>
                         </Grid>
                     </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="0.5*"/>
-                        </Grid.RowDefinitions>
-                        <TextBox x:Name="textBox" Grid.Row="0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Width="400" Background="Black" Foreground="White" KeyUp="textBox_KeyUp" KeyDown="textBox_KeyDown" BorderThickness="0" RenderTransformOrigin="0.496,0.547" Height="50" IsReadOnly="True"/>
-                        <TextBox x:Name="textBox1" Grid.Row="1" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" TextAlignment="Center" Width="400" Height="50" Background="Black" Foreground="White" BorderThickness="0" IsReadOnly="True"/>
-                    </Grid>
-
-
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <mediaLocal:MediaPlaylistView x:Name="playlistView" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Foreground="White" Text="영상 리스트" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                    
+                    <mediaLocal:MediaPlaylistView x:Name="playlistView" Grid.Row="1"/>
 
-                    <TextBlock x:Name="txtCurrentTrack" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <TextBlock x:Name="txtCurrentState" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,50,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock Grid.Row="1" x:Name="txtCurrentTrack" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock Grid.Row="1" x:Name="txtCurrentState" Visibility="Collapsed" Height="30" HorizontalAlignment="Left" Margin="10,50,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
 
                 </Grid>
             </Grid>

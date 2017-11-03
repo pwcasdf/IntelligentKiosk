@@ -92,12 +92,14 @@ namespace IntelligentKiosk
             // Add contents
 
             //single_male
+
             var media1 = new Models.MediaModel();
-            media1.Title = "Pororo Alphabet";
-            media1.MediaUri = new Uri(mediaAddress("single_male_under10"));
-            media1.ArtUri = new Uri(thumbnailAddress("single_male_under10"));
+            media1.Title = "NeoIDM";
+            media1.MediaUri = new Uri(mediaAddress(""));
+            media1.ArtUri = new Uri(thumbnailAddress(""));
             playlistView.Media.Add(media1);
-            
+
+
             var media2 = new Models.MediaModel();
             media2.Title = "Returning to farm";
             media2.MediaUri = new Uri(mediaAddress("single_male_60"));
@@ -105,7 +107,7 @@ namespace IntelligentKiosk
             playlistView.Media.Add(media2);
 
             var media3 = new Models.MediaModel();
-            media3.Title = "Onepiece";
+            media3.Title = "Test";
             media3.MediaUri = new Uri(mediaAddress("single_male_10"));
             media3.ArtUri = new Uri(thumbnailAddress("single_male_10"));
             playlistView.Media.Add(media3);
@@ -117,13 +119,13 @@ namespace IntelligentKiosk
             playlistView.Media.Add(media4);
 
             var media5 = new Models.MediaModel();
-            media5.Title = "Aventador";
+            media5.Title = "Woo Won Jae - Time difference";
             media5.MediaUri = new Uri(mediaAddress("single_male_30"));
             media5.ArtUri = new Uri(thumbnailAddress("single_male_30"));
             playlistView.Media.Add(media5);
 
             var media6 = new Models.MediaModel();
-            media6.Title = "Johnnie Walker";
+            media6.Title = "Financial Tech";
             media6.MediaUri = new Uri(mediaAddress("single_male_40"));
             media6.ArtUri = new Uri(thumbnailAddress("single_male_40"));
             playlistView.Media.Add(media6);
@@ -148,25 +150,25 @@ namespace IntelligentKiosk
             playlistView.Media.Add(media9);
 
             var media10 = new Models.MediaModel();
-            media10.Title = "피 땀 눈물";
+            media10.Title = "Test";
             media10.MediaUri = new Uri(mediaAddress("single_female_10"));
             media10.ArtUri = new Uri(thumbnailAddress("single_female_10"));
             playlistView.Media.Add(media10);
 
             var media11 = new Models.MediaModel();
-            media11.Title = "MAC Lip Swatches";
+            media11.Title = "썸 탈거야";
             media11.MediaUri = new Uri(mediaAddress("single_female_20"));
             media11.ArtUri = new Uri(thumbnailAddress("single_female_20"));
             playlistView.Media.Add(media11);
 
             var media12 = new Models.MediaModel();
-            media12.Title = "CELINE NANO TOTE";
+            media12.Title = "SK II";
             media12.MediaUri = new Uri(mediaAddress("single_female_30"));
             media12.ArtUri = new Uri(thumbnailAddress("single_female_30"));
             playlistView.Media.Add(media12);
 
             var media13 = new Models.MediaModel();
-            media13.Title = "GYM - Return to 20's";
+            media13.Title = "Bali";
             media13.MediaUri = new Uri(mediaAddress("single_female_40"));
             media13.ArtUri = new Uri(thumbnailAddress("single_female_40"));
             playlistView.Media.Add(media13);
@@ -241,7 +243,7 @@ namespace IntelligentKiosk
             playlistView.Media.Add(media24);
 
             var media25 = new Models.MediaModel();
-            media25.Title = "TOEIC";
+            media25.Title = "OPIc";
             media25.MediaUri = new Uri(mediaAddress("group_20"));
             media25.ArtUri = new Uri(thumbnailAddress("group_20"));
             playlistView.Media.Add(media25);
@@ -253,7 +255,7 @@ namespace IntelligentKiosk
             playlistView.Media.Add(media26);
 
             var media27 = new Models.MediaModel();
-            media27.Title = "효도하세요, 효도!";
+            media27.Title = "Interior";
             media27.MediaUri = new Uri(mediaAddress("group_40"));
             media27.ArtUri = new Uri(thumbnailAddress("group_40"));
             playlistView.Media.Add(media27);
@@ -270,6 +272,19 @@ namespace IntelligentKiosk
             media29.ArtUri = new Uri(thumbnailAddress("group_childonly"));
             playlistView.Media.Add(media29);
 
+            var media30 = new Models.MediaModel();
+            media30.Title = "Jack's Secret Video";
+            media30.MediaUri = new Uri(mediaAddress("jack"));
+            media30.ArtUri = new Uri(thumbnailAddress("jack"));
+            playlistView.Media.Add(media30);
+
+            var media31 = new Models.MediaModel();
+            media31.Title = "Pororo Alphabet";
+            media31.MediaUri = new Uri(mediaAddress("single_male_under10"));
+            media31.ArtUri = new Uri(thumbnailAddress("single_male_under10"));
+            playlistView.Media.Add(media31);
+
+            
 
             // Pre-cache all album art to facilitate smooth gapless transitions.
             // A production app would have a more sophisticated object cache.
@@ -388,13 +403,7 @@ namespace IntelligentKiosk
                     this.countDownTextBlock.Text = "1";
                     await Task.Delay(1000);
                     this.cameraGuideCountdownHost.Opacity = 0;
-
-                    textBox.Text = "";
-                    last_time = DateTime.Now;
-                    textBox.IsReadOnly = false;
-                    textBox.Focus(FocusState.Keyboard);
                     this.ProcessCameraCapture(await this.cameraControl.TakeAutoCapturePhoto());
-                    stop_read = true;
                     break;
                 case AutoCaptureState.ShowingCapturedPhoto:
                     this.cameraGuideHost.Opacity = 0;
@@ -557,8 +566,48 @@ namespace IntelligentKiosk
                 // those who are new  @jack
                 if (recommendation == null)
                 {
+                    if (imageWithFaces.IdentifiedPersons.Any())
+                    {
+                        string names = imageWithFaces.IdentifiedPersons.Count() > 1 ? string.Join(", ", imageWithFaces.IdentifiedPersons.Select(p => p.Person.Name)) : imageWithFaces.IdentifiedPersons.First().Person.Name;
+
+                        if (imageWithFaces.IdentifiedPersons.First().Person.Name=="박원철 주임")
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("jack"))));
+
+                            adImage.UriSource = new Uri(thumbnailAddress("jack"));
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "재방문 감사합니다." + "\n" + "" + imageWithFaces.IdentifiedPersons.First().Person.Name + "님." + "\n" + "반갑습니다." + "\n" + "지난번에 구입하신 아이스크림은 어떠셨나요?" + "\n" + "오늘 이 제품은 어떠신가요?";
+                            imageInfoDescription.Text = "정말 귀엽죠?";
+                            return;
+                        }
+                        else if (imageWithFaces.IdentifiedPersons.Count()>1)
+                        {
+                            //return string.Format("Welcome back, {0} and company!", names);
+
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("hancommds"))));
+
+                            adImage.UriSource = new Uri(thumbnailAddress("hancommds"));
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name +" 님들" + "\n" + "반갑습니다.";
+                            imageInfoDescription.Text = "직원 여러분들 환영합니다~~~~~!!!!!!!!";
+                            return;
+                        }
+                        else
+                        {
+                            playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("hancommds"))));
+
+                            adImage.UriSource = new Uri(thumbnailAddress("hancommds"));
+                            imageInfoImage.Source = adImage;
+
+                            imageInfoTB.Text = "한컴MDS" + "\n" + imageWithFaces.IdentifiedPersons.First().Person.Name + " 님" + "\n" + "반갑습니다.";
+                            imageInfoDescription.Text = "환영합니다~~~~~!!!!!!!!";
+                            return;
+                        }
+                    }
                     // when the person is male  @jack
-                    if (face.FaceAttributes.Gender.Equals("Male",StringComparison.OrdinalIgnoreCase))
+                    else if (face.FaceAttributes.Gender.Equals("Male",StringComparison.OrdinalIgnoreCase))
                     {
                         if (averageAge < 10)
                         {
@@ -593,7 +642,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "따분한 수업보단 원피스를 찾아 떠나는 것은 어떤가요?";
+                                    imageInfoDescription.Text = "얘들아 공부해야지?? 수능이 얼마 안남았단다.";
                                     break;
                                 case 20:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_20"))));
@@ -613,7 +662,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "당신의 출근시간을 책임져 줄 남자의 자동차를 소개드립니다.";
+                                    imageInfoDescription.Text = "우원재의 시차 직캠 버전!!!!!!!!!!!!";
                                     break;
                                 case 40:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_40"))));
@@ -622,7 +671,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "직장에선 worker, 지인과는 Johnnie Walker!!";
+                                    imageInfoDescription.Text = "월급으론 어림없다!! 재테크가 필요해!!!";
                                     break;
                                 case 50:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_male_50"))));
@@ -672,7 +721,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "오늘, 방탄소년단의 '피 땀 눈물'을 50%할인된 가격으로 만나보세요.";
+                                    imageInfoDescription.Text = "얘들아 공부해야지?? 수능이 얼마 안남았단다.";
                                     break;
                                 case 20:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_20"))));
@@ -681,7 +730,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "키스를 부르는 입술, 오늘만 특가 할인!!";
+                                    imageInfoDescription.Text = "대세는 볼빨간 사춘기!!!!!!!!!!";
                                     break;
                                 case 30:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_30"))));
@@ -699,7 +748,7 @@ namespace IntelligentKiosk
                                     imageInfoImage.Source = adImage;
 
                                     imageInfoTB.Text = "Gender: " + face.FaceAttributes.Gender + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                                    imageInfoDescription.Text = "다시 20대의 몸매로 돌아가고 싶다면, 등록하세요!!";
+                                    imageInfoDescription.Text = "열심히 일한 당신, 떠나세요 발리로~~~";
                                     break;
                                 case 50:
                                     playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("single_female_50"))));
@@ -868,7 +917,7 @@ namespace IntelligentKiosk
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                            imageInfoDescription.Text = "신발사이즈 토익점수에서 이번 기회에 벗어나세요!!";
+                            imageInfoDescription.Text = "열심히 해서 IH까지!!!!!!!!!!!!!!";
                             break;
                         case 30:
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_30"))));
@@ -886,7 +935,7 @@ namespace IntelligentKiosk
                             imageInfoImage.Source = adImage;
 
                             imageInfoTB.Text = "Type: " + "A Group of People" + "\n" + "Avearage Age: " + averageAge + "\n" + "Num of People: " + numberOfPeople;
-                            imageInfoDescription.Text = "아직 늦지 않았습니다. 오늘 전화하세요.";
+                            imageInfoDescription.Text = "매일 같은집, 인테리어로 새롭게 거듭나 보세요.";
                             break;
                         case 50:
                             playbackList.MoveTo((uint)playbackList.Items.ToList().FindIndex(i => (Uri)i.Source.CustomProperties["uri"] == new Uri(mediaAddress("group_50"))));
@@ -910,6 +959,10 @@ namespace IntelligentKiosk
 
             switch (analyzedFace)
             {
+                case "":
+                    return uriAddress = "";
+                case "jack":
+                    return uriAddress = "";
                 case "single_male_under10":
                     return uriAddress = "";
                 case "single_male_10":
@@ -979,6 +1032,10 @@ namespace IntelligentKiosk
 
             switch (analyzedFace)
             {
+                case "":
+                    return uriAddress = "";
+                case "jack":
+                    return uriAddress = "";
                 case "single_male_under10":
                     return uriAddress = "";
                 case "single_male_10":
@@ -1041,38 +1098,5 @@ namespace IntelligentKiosk
 
             return uriAddress = "";
         }
-
-        DateTime last_time = DateTime.Now;
-        private void textBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            last_time = DateTime.Now;
-            if (textBox.Text == "12345678") textBox1.Text = "가나 초콜릿";
-            else if (textBox.Text == "23456789") textBox1.Text = "맥스봉";
-            else if (textBox.Text == "34567890") textBox1.Text = "m&m 또는 스니커즈 초코바";
-            //else if (textBox.Text == "123456789") textBox1.Text = "A";
-            //else if (textBox.Text == "8808739000054") textBox1.Text = "B";
-            //else if (textBox.Text == "erty87670000") textBox1.Text = "C";
-            //else if (textBox.Text == "qwer567800") textBox1.Text = "A";
-            //else if (textBox.Text == "789bnmeywo00") textBox1.Text = "B";
-            //else if (textBox.Text == "zxas345600") textBox1.Text = "C";
-            else textBox1.Text = "";
-        }
-        bool stop_read = false;
-        private void textBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if(((TextBox)sender).Text.Length == 0) last_time = DateTime.Now;
-            if (DateTime.Now > last_time.AddMilliseconds(200) && ((TextBox)sender).Text.Length > 0)
-            {
-                if (stop_read)
-                {
-                    textBox.IsReadOnly = true;
-                    cameraControl.Focus(FocusState.Keyboard);
-                }
-                else
-                    ((TextBox)sender).Text = "";
-            }
-        }
-        
-        
     }
 }
